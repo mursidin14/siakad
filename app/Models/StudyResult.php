@@ -12,4 +12,19 @@ class StudyResult extends Model
         'student_id',
         'academic_year_id',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
+
+    public function studyResultGrades()
+    {
+        return $this->hasMany(StudyResultGrade::class);
+    }
 }

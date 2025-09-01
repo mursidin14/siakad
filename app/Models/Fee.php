@@ -14,4 +14,19 @@ class Fee extends Model
         'semester',
         'status',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function feeGroup()
+    {
+        return $this->belongsTo(FeeGroup::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
 }

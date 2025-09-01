@@ -13,4 +13,19 @@ class Attendance extends Model
         'student_id',
         'class_room_id',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
 }
