@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Link } from "@radix-ui/react-navigation-menu";
+import { Link } from "@inertiajs/react";
 import { IconSchool } from "@tabler/icons-react";
 
 export default function ApplicationLogo(bgLogo, colorLogo, colorText) {
