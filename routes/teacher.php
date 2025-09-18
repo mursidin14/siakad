@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('teacher')->group(function () {
+Route::prefix('teacher')->middleware(['auth', 'role:Teacher'])->group(function () {
 
     Route::get('dashboard', DashboardTeacherController::class)->name('teacher.dashboard');
 

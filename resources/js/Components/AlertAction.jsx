@@ -24,7 +24,7 @@ export default function AlertAction({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel asChild>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={Continue}>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={action}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

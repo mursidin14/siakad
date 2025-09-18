@@ -1,6 +1,7 @@
 import { router } from '@inertiajs/react';
 import { clsx } from 'clsx';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs) {
@@ -11,7 +12,7 @@ export function flashMessage(params) {
     return params.props.flash_message;
 }
 
-export const deleteAction = (url, { closeModal, ...props } = {}) => {
+export const deleteAction = (url, { closeModal, ...options } = {}) => {
     const defaultOptions = {
         preserveScroll: true,
         preserveState: true,

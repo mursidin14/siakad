@@ -2,12 +2,12 @@ import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { IconSchool } from '@tabler/icons-react';
 
-export default function ApplicationLogo({bgLogo, colorLogo, colorText}) {
+export default function ApplicationLogo({ bgLogo, colorLogo, colorText }) {
     return (
         <Link href="#" className={cn('flex flex-row items-center gap-x-2')}>
             <div
                 className={cn(
-                    `flex aspect-square size-12 items-center justify-center rounded-full bg-gradient-to-r text-foreground `,
+                    `flex aspect-square size-12 items-center justify-center rounded-full bg-gradient-to-r text-foreground`,
                     bgLogo,
                 )}
             >

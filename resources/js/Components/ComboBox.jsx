@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { IconCaretDown, IconCheck } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Button } from './ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/command';
 import { Popover } from './ui/popover';
@@ -35,7 +36,7 @@ export default function ComboBox({ items, selectedItem, onSelect, placeholder = 
                     <CommandList>
                         <CommandEmpty>Item tidak ditemukan</CommandEmpty>
                         <CommandGroup>
-                            {items.map((item, index) => (
+                            {items.map((item, index) => {
                                 <CommandItem key={index} value={item.value} onSelect={(value) => handleSelect(value)}>
                                     {item.label}
                                     <IconCheck
@@ -44,8 +45,8 @@ export default function ComboBox({ items, selectedItem, onSelect, placeholder = 
                                             selectedItem === item.label ? 'opacity-100' : 'opacity-0',
                                         )}
                                     />
-                                </CommandItem>
-                            ))}
+                                </CommandItem>;
+                            })}
                         </CommandGroup>
                     </CommandList>
                 </Command>

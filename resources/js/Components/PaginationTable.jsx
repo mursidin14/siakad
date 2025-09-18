@@ -16,7 +16,7 @@ export default function PaginationTable({ meta, links }) {
                     <PaginationPrevious className={cn('mb-1', !links.prev && 'cursor-not-allowed')} href={links.prev} />
                 </PaginationItem>
                 {meta.links.slice(1, -1).map((link, index) => (
-                    <PaginationItem key={index} className="lb:mb-0 mx-1 mb-1">
+                    <PaginationItem key={index} className="mx-1 mb-1 lg:mb-0">
                         <PaginationLink href={link.url} active={link.active}>
                             {link.label}
                         </PaginationLink>

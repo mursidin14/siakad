@@ -22,6 +22,7 @@ class UserSingleResource extends JsonResource
             'avatar' => $this->avatar ? Storage::url($this->avatar) : null,
             'roles' => $this->getRoleNames(),
             'role_name' => $this->getRoleNames()->first(),
+            
             'student' => $this->when($this->hasRole('Student'), [
                 'id' => $this->student?->id,
                 'student_number' => $this->student?->student_number,
