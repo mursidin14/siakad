@@ -29,17 +29,17 @@ class UserSingleResource extends JsonResource
                 'batch' => $this->student?->batch,
                 'semester' => $this->student?->semester,
                 'faculty' => [
-                    'id' => $this->student?->faculty->id,
-                    'name' => $this->student?->faculty->name,
+                    'id' => $this->student?->faculty?->id,
+                    'name' => $this->student?->faculty?->name,
                 ],
                 'departement' => [
-                    'id' => $this->student?->departement->id,
-                    'name' => $this->student?->departement->name,
+                    'id' => $this->student?->departement?->id,
+                    'name' => $this->student?->departement?->name,
                 ],
                 'fee_group' => [
-                    'id' => $this->student?->fee_group->id,
-                    'group' => $this->student?->fee_group->group,
-                    'amount' => $this->student?->fee_group->amount,
+                    'id' => $this->student?->fee_group?->id,
+                    'group' => $this->student?->fee_group?->group,
+                    'amount' => $this->student?->fee_group?->amount,
                 ]
             ]),
 

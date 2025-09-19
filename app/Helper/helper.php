@@ -18,7 +18,7 @@ if(!function_exists('signatureMidtrans')) {
 }
 
 if(!function_exists('activeAcademicYear')) {
-    function activeAcademicYear(): string
+    function activeAcademicYear(): ?App\Models\AcademicYear
     {
         return AcademicYear::query()->where('is_active', true)->first();
     }
