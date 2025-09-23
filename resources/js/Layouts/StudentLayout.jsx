@@ -14,6 +14,8 @@ export default function StudentLayout({ title, children }) {
 
     const { url } = usePage();
 
+    const auth = usePage().props.auth.user;
+
     useEffect(() => {
         if (flash && flash.message && flash.type === 'warning') {
             toast[flash.type](flash.message);
@@ -29,7 +31,7 @@ export default function StudentLayout({ title, children }) {
             <div className="min-h-full">
                 <div className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 pb-32">
                     {/* header layout */}
-                    <HeaderStudentLayout url={url} />
+                    <HeaderStudentLayout auth={auth} url={url} />
                 </div>
 
                 <main className="-mt-32 px-6 pb-12 lg:px-28">

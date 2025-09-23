@@ -42,7 +42,7 @@ export default function Sidebar({ url, auth }) {
                 {auth.roles.some((role) => ['Admin'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
+                            url={route('admin.dashboard')}
                             active={url.startsWith('/admin/dashboard')}
                             title={'Dashboard'}
                             icon={IconLayout2}
@@ -51,7 +51,7 @@ export default function Sidebar({ url, auth }) {
                         <div className="px-3 py-2 text-xs font-medium text-white">Master</div>
 
                         <NavLink
-                            url="#"
+                            url={route('admin.faculties.index')}
                             active={url.startsWith('/admin/faculties')}
                             title={'Faculties'}
                             icon={IconBuildingSkyscraper}
