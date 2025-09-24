@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class FacultyRequest extends FormRequest
+class DepartementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,32 +22,24 @@ class FacultyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'faculty_id' => [
+                'required',
+                'exists:faculties,id'
+            ],
             'name' => [
                 'required',
                 'string',
                 'min:3',
-                'max:255',
+                'max:255'
             ],
-
-            'logo' => Rule::when($this->routeIs('admin.faculties.store'), [
-                'required',
-                'mimes:png, jpg, jpeg, webp',
-                'max:2048'
-            ]),
-
-            Rule::when($this->routeIs('admin.faculties.update'), [
-                'nullable',
-                'mimes:png, jpg, jpeg, webp',
-                'max:2048'
-            ]),
         ];
     }
 
     public function attributes(): array
     {
         return [
+            'faculty_id' => 'Fakultas',
             'name' => 'Nama',
-            'logo' => 'Logo',
         ];
     }
 }

@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError'
 import { Button } from '@/Components/ui/button'
 import { Card, CardContent } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
+import { Label } from '@/Components/ui/label'
 import AppLayout from '@/Layouts/AppLayout'
 import { flashMessage } from '@/lib/utils'
 import { Link, useForm } from '@inertiajs/react'
@@ -67,7 +68,7 @@ export default function Create(props) {
                     <form onSubmit={onHandleSubmit}>
                         <div className='grid grid-cols-1 gap-4 '>
                             <div className='col-span-full'>
-                                <label htmlFor="name">Nama</label>
+                                <Label htmlFor="name">Nama</Label>
                                 <Input 
                                     type="text"
                                     name="name"
@@ -80,7 +81,7 @@ export default function Create(props) {
                             </div>
 
                             <div className='col-span-full'>
-                                <label htmlFor="logo">Logo</label>
+                                <Label htmlFor="logo">Logo</Label>
                                 <Input 
                                     type="file"
                                     name="logo"
