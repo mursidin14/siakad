@@ -43,7 +43,7 @@ export default function SideBarResponsive({ url, auth }) {
                             icon={IconSchool}
                         />
                         <NavLink
-                            url="#"
+                            url={route('admin.academic-years.index')}
                             active={url.startsWith('/admin/academic-years')}
                             title={'Tahun Ajaran'}
                             icon={IconCalendarTime}

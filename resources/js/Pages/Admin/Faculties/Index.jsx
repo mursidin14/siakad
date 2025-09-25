@@ -93,7 +93,7 @@ export default function Index(props) {
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className='p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6'>
-                    {faculties === 0 ? 
+                    {faculties.length === 0 ? 
                     (
                         <EmptyState
                             icon={IconBuildingSkyscraper}
