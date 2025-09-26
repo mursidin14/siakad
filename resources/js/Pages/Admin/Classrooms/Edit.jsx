@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: props.classroom.faculty_id ?? null,
-        departement_id: props.classroom.departement_id ??null,
+        departement_id: props.classroom.departement_id ?? null,
         academic_year_id: props.academic_year.name,
         name: props.classroom.name ?? '',
         _method: props.page_settings.method,
@@ -87,8 +87,9 @@ export default function Edit(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.departements.find((departement) => departement.value == data.departement_id)
-                                                ?.label ?? 'Pilih Program Studi'}
+                                            {props.departements.find(
+                                                (departement) => departement.value == data.departement_id,
+                                            )?.label ?? 'Pilih Program Studi'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -104,7 +105,7 @@ export default function Edit(props) {
 
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input 
+                                <Input
                                     id="academic_year_id"
                                     name="academic_year_id"
                                     value={data.academic_year_id}

@@ -3,6 +3,7 @@ import EmptyState from '@/Components/EmptyState';
 import HeaderTitle from '@/Components/HeaderTitle';
 import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
+import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -12,11 +13,19 @@ import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconCalendar, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import {
+    IconArrowsDownUp,
+    IconBuildingSkyscraper,
+    IconCircleKey,
+    IconPencil,
+    IconPlus,
+    IconRefresh,
+    IconTrash,
+} from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
-    const { data: academicYears, meta, links } = props.academicYears;
+    const { data: roles, meta, links } = props.roles;
 
     const [params, setParams] = useState(props.state);
 
@@ -29,9 +38,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.academic-years.index'),
+        route: route('admin.roles.index'),
         values: params,
-        only: ['academicYears'],
+        only: ['roles'],
     });
 
     return (
@@ -40,11 +49,11 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconCalendar}
+                    icon={IconCircleKey}
                 />
 
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.academic-years.create')}>
+                    <Link href={route('admin.roles.create')}>
                         <IconPlus className="size-4" />
                         Tambah
                     </Link>
@@ -53,7 +62,7 @@ export default function Index(props) {
 
             <Card>
                 <CardHeader className="mb-4 p-0">
-                    {/* Filters IconBuilding */}
+                    {/* Filters */}
                     <div className="flex w-full flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center">
                         <Input
                             className="w-full sm:w-1/4"
@@ -81,15 +90,15 @@ export default function Index(props) {
                             Bersihkan
                         </Button>
                     </div>
-                    {/* Show Filters academicYear */}
+                    {/* Show Filters */}
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className="p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
-                    {academicYears.length === 0 ? (
+                    {roles.length === 0 ? (
                         <EmptyState
-                            icon={IconCalendar}
-                            title="Tidak ada Tahun Akademik"
-                            subtitle="Mulailah dengan membuat Tahun Akademik baru"
+                            icon={IconCircleKey}
+                            title="Tidak ada peran"
+                            subtitle="Mulailah dengan membuat peran baru"
                         />
                     ) : (
                         <Table>
@@ -123,45 +132,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('start_date')}
+                                            onClick={() => onSortable('guard_name')}
                                         >
-                                            Tanggal Mulai
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('end_date')}
-                                        >
-                                            Tanggal Berakhir
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('semester')}
-                                        >
-                                            Semester
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('is_active')}
-                                        >
-                                            Aktivasi
+                                            Guard Name
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -183,19 +156,16 @@ export default function Index(props) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {academicYears.map((academicYear, index) => (
+                                {roles.map((role, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{academicYear.name}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.start_date)}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.end_date)}</TableCell>
-                                        <TableCell>{academicYear.semester}</TableCell>
-                                        <TableCell>{academicYear.is_active}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.created_at)}</TableCell>
+                                        <TableCell>{role.name}</TableCell>
+                                        <TableCell>{role.guard_name}</TableCell>
+                                        <TableCell>{formatDateIndo(role.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant="blue" size="sm">
-                                                    <Link href={route('admin.academic-years.edit', [academicYear])}>
+                                                    <Link href={route('admin.roles.edit', [role])}>
                                                         <IconPencil className="size-4" />
                                                     </Link>
                                                 </Button>
@@ -206,9 +176,7 @@ export default function Index(props) {
                                                         </Button>
                                                     }
                                                     action={() =>
-                                                        deleteAction(
-                                                            route('admin.academic-years.destroy', [academicYear]),
-                                                        )
+                                                        deleteAction(route('admin.roles.destroy', [role]))
                                                     }
                                                 />
                                             </div>
@@ -222,7 +190,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between gap-y-2 border-t py-3 lg:flex-row">
                     <p className="text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-blue-600">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} Tahun Ajaran
+                        {meta.total} Peran
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}

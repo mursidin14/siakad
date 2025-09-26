@@ -87,8 +87,9 @@ export default function Create(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.departements.find((departement) => departement.value == data.departement_id)
-                                                ?.label ?? 'Pilih Program Studi'}
+                                            {props.departements.find(
+                                                (departement) => departement.value == data.departement_id,
+                                            )?.label ?? 'Pilih Program Studi'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -104,7 +105,7 @@ export default function Create(props) {
 
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input 
+                                <Input
                                     id="academic_year_id"
                                     name="academic_year_id"
                                     value={data.academic_year_id}

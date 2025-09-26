@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\DepartementController;
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -61,6 +62,17 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
         Route::get('classrooms/edit/{classroom:slug}', 'edit')->name('admin.classrooms.edit');
         Route::put('classrooms/edit/{classroom:slug}', 'update')->name('admin.classrooms.update');
         Route::delete('classrooms/destroy/{classroom:slug}', 'destroy')->name('admin.classrooms.destroy');
+    });
+
+
+    // role Navigation
+    Route::controller(RoleController::class)->group(function() {
+        Route::get('roles', 'index')->name('admin.roles.index');
+        Route::get('roles/create', 'create')->name('admin.roles.create');
+        Route::post('roles/create', 'store')->name('admin.roles.store');
+        Route::get('roles/edit/{role}', 'edit')->name('admin.roles.edit');
+        Route::put('roles/edit/{role}', 'update')->name('admin.roles.update');
+        Route::delete('roles/destroy/{role}', 'destroy')->name('admin.roles.destroy');
     });
 
 });

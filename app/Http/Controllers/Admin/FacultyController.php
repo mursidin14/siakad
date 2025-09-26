@@ -100,7 +100,7 @@ class FacultyController extends Controller
     }
 
 
-      public function update(Faculty $faculty, FacultyRequest $request): RedirectResponse
+    public function update(Faculty $faculty, FacultyRequest $request): RedirectResponse
     {
         try{
 
