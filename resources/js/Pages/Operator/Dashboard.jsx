@@ -5,7 +5,6 @@ import { usePage } from '@inertiajs/react';
 import { IconBook2, IconDoor, IconLayout2, IconUser, IconUsersGroup } from '@tabler/icons-react';
 
 export default function Dashboard(props) {
-
     const auth = usePage().props.auth.user;
 
     return (
@@ -18,12 +17,12 @@ export default function Dashboard(props) {
                 />
             </div>
 
-            <div className='flex flex-col mb-8'>
-                <h2 className='text-xl font-medium leading-relaxed text-foreground'>Hi, {auth.name}</h2>
-                <p className='text-sm text-muted-foreground'>Selamat datang di Sistem Informasi Akademik Universitas</p>
+            <div className="mb-8 flex flex-col">
+                <h2 className="text-xl font-medium leading-relaxed text-foreground">Hi, {auth.name}</h2>
+                <p className="text-sm text-muted-foreground">Selamat datang di Sistem Informasi Akademik Universitas</p>
             </div>
 
-            <div className='grid gap-4 mb-8 lg:grid-cols-4'>
+            <div className="mb-8 grid gap-4 lg:grid-cols-4">
                 {/* card stat fakulats */}
                 <CardStat
                     data={{
@@ -33,7 +32,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className='text-2xl font-bold'>{props.count.students}</div>
+                    <div className="text-2xl font-bold">{props.count.students}</div>
                 </CardStat>
 
                 {/* card stat Program Studi */}
@@ -45,7 +44,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className='text-2xl font-bold'>{props.count.teachers}</div>
+                    <div className="text-2xl font-bold">{props.count.teachers}</div>
                 </CardStat>
 
                 {/* card stat Class Room */}
@@ -57,7 +56,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className='text-2xl font-bold'>{props.count.classroom}</div>
+                    <div className="text-2xl font-bold">{props.count.classroom}</div>
                 </CardStat>
 
                 {/* card stat Course */}
@@ -69,7 +68,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className='text-2xl font-bold'>{props.count.course}</div>
+                    <div className="text-2xl font-bold">{props.count.course}</div>
                 </CardStat>
             </div>
         </div>

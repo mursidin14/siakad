@@ -8,13 +8,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
-import { IconArrowLeft, IconCheck, IconSchool } from '@tabler/icons-react';
+import { IconArrowLeft, IconCheck, IconDoor } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
-export default function Edit(props) {
+export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        faculty_id: props.departement.faculty_id ?? null,
-        name: props.departement.name ?? '',
+        faculty_id: null,
+        departement_id: null,
+        academic_year_id: props.academic_year.name,
+        name: '',
         _method: props.page_settings.method,
     });
 
@@ -40,7 +42,7 @@ export default function Edit(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconSchool}
+                    icon={IconDoor}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
                     <Link href={route('admin.departements.index')}>
@@ -78,12 +80,48 @@ export default function Edit(props) {
                             </div>
 
                             <div className="col-span-full">
+                                <Label htmlFor="departement_id">Program Studi</Label>
+                                <Select
+                                    defaultValue={data.departement_id}
+                                    onValueChange={(value) => setData('departement_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>
+                                            {props.departements.find((departement) => departement.value == data.departement_id)
+                                                ?.label ?? 'Pilih Program Studi'}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {props.departements.map((departement, index) => (
+                                            <SelectItem key={index} value={departement.value}>
+                                                {departement.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.departement_id && <InputError message={errors.departement_id} />}
+                            </div>
+
+                            <div className="col-span-full">
+                                <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
+                                <Input 
+                                    id="academic_year_id"
+                                    name="academic_year_id"
+                                    value={data.academic_year_id}
+                                    onChange={onHandleChange}
+                                    type="text"
+                                    disabled
+                                />
+                                {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
+                            </div>
+
+                            <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
                                 <Input
                                     type="text"
                                     name="name"
                                     id="name"
-                                    placeholder="Masukan nama program studi"
+                                    placeholder="Masukan nama kelas"
                                     value={data.name}
                                     onChange={onHandleChange}
                                 />
@@ -107,4 +145,4 @@ export default function Edit(props) {
     );
 }
 
-Edit.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;
+Create.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;

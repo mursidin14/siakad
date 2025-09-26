@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback } from '@/Components/ui/avatar';
+import { Toaster } from '@/Components/ui/sonner';
 import { flashMessage } from '@/lib/utils';
 import { Dialog, Transition } from '@headlessui/react';
 import { Head, Link, usePage } from '@inertiajs/react';
@@ -7,7 +8,6 @@ import { Fragment, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Sidebar from './Partials/Sidebar';
 import SideBarResponsive from './Partials/SideBarResponsive';
-import { Toaster } from '@/Components/ui/sonner';
 
 export default function AppLayout({ title, children }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);

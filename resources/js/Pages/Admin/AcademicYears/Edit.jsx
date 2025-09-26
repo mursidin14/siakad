@@ -6,23 +6,20 @@ import { Checkbox } from '@/Components/ui/checkbox';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import AppLayout from '@/Layouts/AppLayout'
+import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
-import { Link, useForm } from '@inertiajs/react'
-import { IconArrowLeft, IconCalendar, IconCheck, IconSchool } from '@tabler/icons-react';
-import React from 'react'
+import { Link, useForm } from '@inertiajs/react';
+import { IconArrowLeft, IconCalendar, IconCheck } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
-
-    const {data, setData, post, processing, errors, reset} = useForm({
-        name: props.academicYear.name ??'',
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: props.academicYear.name ?? '',
         start_date: props.academicYear.start_date ?? '',
         end_date: props.academicYear.end_date ?? '',
         semester: props.academicYear.semester ?? null,
         is_active: props.academicYear.is_active ?? false,
-        _method: props.page_settings.method
-    
+        _method: props.page_settings.method,
     });
 
     const onHandleChange = (e) => setData(e.target.name, e.target.value);
@@ -33,59 +30,54 @@ export default function Edit(props) {
             preserveScroll: true,
             preserveState: true,
             onSuccess: (success) => {
-                const flash = flashMessage(success)
-                if(flash) toast[flash.type](flash.message)
-            }
-        })
-    }
+                const flash = flashMessage(success);
+                if (flash) toast[flash.type](flash.message);
+            },
+        });
+    };
 
     const onHandleReset = () => reset();
 
-  return (
-        <div className='flex flex-col w-full pb-32'>
-            <div className='flex flex-col items-start justify-between mb-8 gap-y-4 lg:flex-row lg:items-center'>
-                <HeaderTitle 
+    return (
+        <div className="flex w-full flex-col pb-32">
+            <div className="mb-8 flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
+                <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
                     icon={IconCalendar}
                 />
-                <Button
-                    variant='orange'
-                    size='xl'
-                    className='w-full lg:w-auto'
-                    asChild
-                >
+                <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
                     <Link href={route('admin.academic-years.index')}>
-                        <IconArrowLeft className='size-4' />
+                        <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>
                 </Button>
             </div>
 
             <Card>
-                <CardContent className='p-6'>
+                <CardContent className="p-6">
                     <form onSubmit={onHandleSubmit}>
-                        <div className='grid grid-cols-1 gap-4 '>                          
-                            <div className='col-span-full'>
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
-                                <Input 
+                                <Input
                                     type="text"
                                     name="name"
-                                    id='name'
-                                    placeholder='Masukan nama program studi'
+                                    id="name"
+                                    placeholder="Masukan nama program studi"
                                     value={data.name}
                                     onChange={onHandleChange}
                                 />
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
-                            <div className='grid grid-cols-1 col-span-2 gap-4 lg:grid-cols-2'>
+                            <div className="col-span-2 grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 <div>
                                     <Label htmlFor="start_date">Tanggal Mulai</Label>
-                                    <Input 
+                                    <Input
                                         type="date"
                                         name="start_date"
-                                        id='start_date'
-                                        placeholder='Masukan tahun ajaran'
+                                        id="start_date"
+                                        placeholder="Masukan tahun ajaran"
                                         value={data.start_date}
                                         onChange={onHandleChange}
                                     />
@@ -93,17 +85,17 @@ export default function Edit(props) {
                                 </div>
                                 <div>
                                     <Label htmlFor="end_date">Tanggal Berakhir</Label>
-                                    <Input 
+                                    <Input
                                         type="date"
                                         name="end_date"
-                                        id='end_date'
+                                        id="end_date"
                                         value={data.end_date}
                                         onChange={onHandleChange}
                                     />
                                     {errors.end_date && <InputError message={errors.end_date} />}
                                 </div>
                             </div>
-                             <div className='col-span-full'>
+                            <div className="col-span-full">
                                 <Label htmlFor="semester">Semester</Label>
                                 <Select
                                     defaultValue={data.semester}
@@ -111,7 +103,9 @@ export default function Edit(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.academicYearSemester.find((semester) => semester.value == data.semester)?.label ?? 'Pilih Semester'}
+                                            {props.academicYearSemester.find(
+                                                (semester) => semester.value == data.semester,
+                                            )?.label ?? 'Pilih Semester'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -124,27 +118,27 @@ export default function Edit(props) {
                                 </Select>
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
-                            <div className='col-span-full'>
-                                 <div className='flex space-x-2 items-top'>
+                            <div className="col-span-full">
+                                <div className="items-top flex space-x-2">
                                     <Checkbox
-                                        id='is_active'
-                                        name='is_active'
+                                        id="is_active"
+                                        name="is_active"
                                         checked={data.is_active}
                                         onCheckedChange={(checked) => setData('is_active', checked)}
                                     />
-                                    <div className=''>
+                                    <div className="">
                                         <Label htmlFor="is_active">Aktivasi</Label>
                                     </div>
                                     {errors.is_active && <InputError message={errors.is_active} />}
-                                 </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className='flex flex-col gap-2 mt-8 lg:flex-row lg:justify-end'>
-                            <Button type='button' variant='ghost' size='xl' onClick={onHandleReset}>
+                        <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">
+                            <Button type="button" variant="ghost" size="xl" onClick={onHandleReset}>
                                 Reset
                             </Button>
-                            <Button type="submit" variant='blue' size='xl' disabled={processing}>
+                            <Button type="submit" variant="blue" size="xl" disabled={processing}>
                                 <IconCheck />
                                 Save
                             </Button>
@@ -153,8 +147,7 @@ export default function Edit(props) {
                 </CardContent>
             </Card>
         </div>
-  )
+    );
 }
 
-
-Edit.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />
+Edit.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;

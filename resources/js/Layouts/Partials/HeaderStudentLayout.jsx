@@ -15,7 +15,6 @@ import { Disclosure } from '@headlessui/react';
 import { Link } from '@inertiajs/react';
 import { IconChevronCompactDown, IconLayoutSidebar, IconLogout2, IconX } from '@tabler/icons-react';
 
-
 export default function HeaderStudentLayout({ url, auth }) {
     return (
         <>
@@ -97,7 +96,9 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                     </Avatar>
                                                     <div className="grid flex-1 text-left text-sm leading-tight">
                                                         <span className="truncate font-semibold">{auth.name}</span>
-                                                        <span className="truncate text-xs">{auth.student.student_number}</span>
+                                                        <span className="truncate text-xs">
+                                                            {auth.student.student_number}
+                                                        </span>
                                                     </div>
 
                                                     <IconChevronCompactDown className="ml-auto size-4" />
@@ -120,7 +121,9 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                         </Avatar>
                                                         <div className="grid flex-1 text-left text-sm leading-tight">
                                                             <span className="truncate font-semibold">{auth.name}</span>
-                                                            <span className="truncate text-xs">{auth.student.student_number}</span>
+                                                            <span className="truncate text-xs">
+                                                                {auth.student.student_number}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </DropdownMenuLabel>
@@ -220,7 +223,9 @@ export default function HeaderStudentLayout({ url, auth }) {
 
                                     <div className="ml-3">
                                         <div className="text-base font-medium text-white">{auth.name}</div>
-                                        <div className="text-sm font-medium text-white">{auth.student.student_number}</div>
+                                        <div className="text-sm font-medium text-white">
+                                            {auth.student.student_number}
+                                        </div>
                                     </div>
                                 </div>
 

@@ -12,12 +12,11 @@ import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconCalendar, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { IconArrowsDownUp, IconDoor, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
-    const { data: academicYears, meta, links } = props.academicYears;
-
+    const { data: classrooms, meta, links } = props.classrooms;
 
     const [params, setParams] = useState(props.state);
 
@@ -30,9 +29,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.academic-years.index'),
+        route: route('admin.classrooms.index'),
         values: params,
-        only: ['academicYears'],
+        only: ['classrooms'],
     });
 
     return (
@@ -41,11 +40,11 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconCalendar}
+                    icon={IconDoor}
                 />
 
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.academic-years.create')}>
+                    <Link href={route('admin.classrooms.create')}>
                         <IconPlus className="size-4" />
                         Tambah
                     </Link>
@@ -54,7 +53,7 @@ export default function Index(props) {
 
             <Card>
                 <CardHeader className="mb-4 p-0">
-                    {/* Filters IconBuilding */}
+                    {/* Filters IconBuilding departements */}
                     <div className="flex w-full flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center">
                         <Input
                             className="w-full sm:w-1/4"
@@ -82,15 +81,15 @@ export default function Index(props) {
                             Bersihkan
                         </Button>
                     </div>
-                    {/* Show Filters academicYear */}
+                    {/* Show Filters */}
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className="p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
-                    {academicYears.length === 0 ? (
+                    {classrooms.length === 0 ? (
                         <EmptyState
-                            icon={IconCalendar}
-                            title="Tidak ada Tahun Akademik"
-                            subtitle="Mulailah dengan membuat Tahun Akademik baru"
+                            icon={IconDoor}
+                            title="Tidak ada Kelas"
+                            subtitle="Mulailah dengan membuat kelas baru"
                         />
                     ) : (
                         <Table>
@@ -112,57 +111,45 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
+                                            onClick={() => onSortable('faculty_id')}
+                                        >
+                                            Fakultas
+                                            <span className="ml-2 flex-none rounded text-muted-foreground">
+                                                <IconArrowsDownUp className="size-4" />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button
+                                            variant="ghost"
+                                            className="group inline-flex"
+                                            onClick={() => onSortable('departement_id')}
+                                        >
+                                            Program Studi
+                                            <span className="ml-2 flex-none rounded text-muted-foreground">
+                                                <IconArrowsDownUp className="size-4" />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button
+                                            variant="ghost"
+                                            className="group inline-flex"
+                                            onClick={() => onSortable('academic_year_id')}
+                                        >
+                                            Tahun Ajaran
+                                            <span className="ml-2 flex-none rounded text-muted-foreground">
+                                                <IconArrowsDownUp className="size-4" />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button
+                                            variant="ghost"
+                                            className="group inline-flex"
                                             onClick={() => onSortable('name')}
                                         >
                                             Nama
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('start_date')}
-                                        >
-                                            Tanggal Mulai
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('end_date')}
-                                        >
-                                            Tanggal Berakhir
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('semester')}
-                                        >
-                                            Semester
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('is_active')}
-                                        >
-                                            Aktivasi
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -184,19 +171,18 @@ export default function Index(props) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {academicYears.map((academicYear, index) => (
+                                {classrooms.map((classroom, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{academicYear.name}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.start_date)}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.end_date)}</TableCell>
-                                        <TableCell>{academicYear.semester}</TableCell>
-                                        <TableCell>{academicYear.is_active}</TableCell>
-                                        <TableCell>{formatDateIndo(academicYear.created_at)}</TableCell>
+                                        <TableCell>{classroom.faculty.name}</TableCell>
+                                        <TableCell>{classroom.departement.name}</TableCell>
+                                        <TableCell>{classroom.academicYear.name}</TableCell>
+                                        <TableCell>{classroom.name}</TableCell>
+                                        <TableCell>{formatDateIndo(classroom.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant="blue" size="sm">
-                                                    <Link href={route('admin.academic-years.edit', [academicYear])}>
+                                                    <Link href={route('admin.classrooms.edit', [classroom])}>
                                                         <IconPencil className="size-4" />
                                                     </Link>
                                                 </Button>
@@ -207,9 +193,7 @@ export default function Index(props) {
                                                         </Button>
                                                     }
                                                     action={() =>
-                                                        deleteAction(
-                                                            route('admin.academic-years.destroy', [academicYear]),
-                                                        )
+                                                        deleteAction(route('admin.classrooms.destroy', [classroom]))
                                                     }
                                                 />
                                             </div>
@@ -223,7 +207,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between gap-y-2 border-t py-3 lg:flex-row">
                     <p className="text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-blue-600">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} Tahun Ajaran
+                        {meta.total} Kelas
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}
