@@ -173,7 +173,7 @@ export default function Index(props) {
                             <TableBody>
                                 {classrooms.map((classroom, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                         <TableCell>{classroom.faculty.name}</TableCell>
                                         <TableCell>{classroom.departement.name}</TableCell>
                                         <TableCell>{classroom.academicYear.name}</TableCell>

@@ -158,7 +158,7 @@ export default function Index(props) {
                             <TableBody>
                                 {faculties.map((faculty, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                         <TableCell>{faculty.name}</TableCell>
                                         <TableCell>{faculty.name}</TableCell>
                                         <TableCell>{faculty.code}</TableCell>

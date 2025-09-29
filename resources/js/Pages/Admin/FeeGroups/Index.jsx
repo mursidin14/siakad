@@ -11,12 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
-import { deleteAction, formatDateIndo } from '@/lib/utils';
+import { deleteAction, formatDateIndo, formatToRupiah } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import {
     IconArrowsDownUp,
-    IconBuildingSkyscraper,
-    IconCircleKey,
+    IconDroplets,
     IconPencil,
     IconPlus,
     IconRefresh,
@@ -25,7 +24,7 @@ import {
 import { useState } from 'react';
 
 export default function Index(props) {
-    const { data: roles, meta, links } = props.roles;
+    const { data: feeGroups, meta, links } = props.feeGroups;
 
     const [params, setParams] = useState(props.state);
 
@@ -38,9 +37,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.roles.index'),
+        route: route('admin.fee-groups.index'),
         values: params,
-        only: ['roles'],
+        only: ['feeGroups'],
     });
 
     return (
@@ -49,11 +48,11 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconCircleKey}
+                    icon={IconDroplets}
                 />
 
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.roles.create')}>
+                    <Link href={route('admin.fee-groups.create')}>
                         <IconPlus className="size-4" />
                         Tambah
                     </Link>
@@ -94,11 +93,11 @@ export default function Index(props) {
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className="p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
-                    {roles.length === 0 ? (
+                    {feeGroups.length === 0 ? (
                         <EmptyState
-                            icon={IconCircleKey}
-                            title="Tidak ada peran"
-                            subtitle="Mulailah dengan membuat peran baru"
+                            icon={IconDroplets}
+                            title="Tidak ada fee-group"
+                            subtitle="Mulailah dengan membuat fee-group baru"
                         />
                     ) : (
                         <Table>
@@ -120,9 +119,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('name')}
+                                            onClick={() => onSortable('group')}
                                         >
-                                            Nama
+                                            Golongan
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -132,9 +131,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('guard_name')}
+                                            onClick={() => onSortable('amount')}
                                         >
-                                            Guard Name
+                                            Jumlah
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -156,16 +155,16 @@ export default function Index(props) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {roles.map((role, index) => (
+                                {feeGroups.map((feeGroup, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                        <TableCell>{role.name}</TableCell>
-                                        <TableCell>{role.guard_name}</TableCell>
-                                        <TableCell>{formatDateIndo(role.created_at)}</TableCell>
+                                        <TableCell>{feeGroup.group}</TableCell>
+                                        <TableCell>{formatToRupiah(feeGroup.amount)}</TableCell>
+                                        <TableCell>{formatDateIndo(feeGroup.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant="blue" size="sm">
-                                                    <Link href={route('admin.roles.edit', [role])}>
+                                                    <Link href={route('admin.fee-groups.edit', [feeGroup])}>
                                                         <IconPencil className="size-4" />
                                                     </Link>
                                                 </Button>
@@ -176,7 +175,7 @@ export default function Index(props) {
                                                         </Button>
                                                     }
                                                     action={() =>
-                                                        deleteAction(route('admin.roles.destroy', [role]))
+                                                        deleteAction(route('admin.fee-groups.destroy', [feeGroup]))
                                                     }
                                                 />
                                             </div>
@@ -190,7 +189,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between gap-y-2 border-t py-3 lg:flex-row">
                     <p className="text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-blue-600">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} Peran
+                        {meta.total} Golongan UKT
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}

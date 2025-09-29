@@ -185,7 +185,7 @@ export default function Index(props) {
                             <TableBody>
                                 {academicYears.map((academicYear, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                         <TableCell>{academicYear.name}</TableCell>
                                         <TableCell>{formatDateIndo(academicYear.start_date)}</TableCell>
                                         <TableCell>{formatDateIndo(academicYear.end_date)}</TableCell>

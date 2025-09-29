@@ -7,13 +7,14 @@ import { Label } from '@/Components/ui/label';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
-import { IconArrowLeft, IconCheck, IconCircleKey } from '@tabler/icons-react';
+import { IconArrowLeft, IconCheck, IconDroplets } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
-export default function Edit(props) {
+export default function Create(props) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: props.role.name ?? '',
+        group: 1,
+        amount: 0,
         _method: props.page_settings.method,
     });
 
@@ -39,10 +40,10 @@ export default function Edit(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconCircleKey}
+                    icon={IconDroplets}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.roles.index')}>
+                    <Link href={route('admin.faculties.index')}>
                         <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>
@@ -54,16 +55,29 @@ export default function Edit(props) {
                     <form onSubmit={onHandleSubmit}>
                         <div className="grid grid-cols-1 gap-4">
                             <div className="col-span-full">
-                                <Label htmlFor="name">Nama</Label>
+                                <Label htmlFor="group">Golongan</Label>
                                 <Input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder="Masukan nama peran"
-                                    value={data.name}
+                                    type="number"
+                                    name="group"
+                                    id="group"
+                                    placeholder="Masukan golongan ukt"
+                                    value={data.group}
                                     onChange={(e) => setData(e.target.name, e.target.value)}
                                 />
-                                {errors.name && <InputError message={errors.name} />}
+                                {errors.group && <InputError message={errors.group} />}
+                            </div>
+
+                            <div className="col-span-full">
+                                <Label htmlFor="amount">Jumlah</Label>
+                                <Input
+                                    type="number"
+                                    name="amount"
+                                    id="amount"
+                                    placeholder="Masukan jumlah ukt"
+                                    value={data.amount}
+                                    onChange={(e) => setData(e.target.name, e.target.value)}
+                                />
+                                {errors.amount && <InputError message={errors.amount} />}
                             </div>
                         </div>
 
@@ -83,4 +97,4 @@ export default function Edit(props) {
     );
 }
 
-Edit.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />;
+Create.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />;
