@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\DepartementController;
 use App\Http\Controllers\Admin\FeeGroupsController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -85,6 +86,17 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
         Route::get('fee-groups/edit/{feeGroup}', 'edit')->name('admin.fee-groups.edit');
         Route::put('fee-groups/edit/{feeGroup}', 'update')->name('admin.fee-groups.update');
         Route::delete('fee-groups/destroy/{feeGroup}', 'destroy')->name('admin.fee-groups.destroy');
+    });
+
+
+     // mahasiswa Navigation
+    Route::controller(StudentController::class)->group(function() {
+        Route::get('students', 'index')->name('admin.students.index');
+        Route::get('students/create', 'create')->name('admin.students.create');
+        Route::post('students/create', 'store')->name('admin.students.store');
+        Route::get('students/edit/{student:student_number}', 'edit')->name('admin.students.edit');
+        Route::put('students/edit/{student:student_number}', 'update')->name('admin.students.update');
+        Route::delete('students/destroy/{student:student_number}', 'destroy')->name('admin.students.destroy');
     });
 
 });

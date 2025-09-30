@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Resources\Admin;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+
+class StudentResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'student_number' => $this->student_number,
+            'batch' => $this->batch,
+            'semester' => $this->semester,
+            'created_at' => $this->created_at,
+
+            'user' => $this->whenLoaded('user', [
+                'id' => $this->user?->id,
+                'name' => $this->user?->name,
+                'email' => $this->user?->email,
+                'avatar' => $this->user?->avatar ? Storage::url($this->user->avatar) : null,
+            ]),
+
+            'faculty' => $this->whenLoaded('faculty', [
+                'id' => $this->faculty?->id,
+                'name' => $this->faculty?->name,
+            ]),
+
+            'departement' => $this->whenLoaded('departement', [
+                'id' => $this->departement?->id,
+                'name' => $this->departement?->name,
+            ]),
+
+            'classroom' => $this->whenLoaded('classRoom', [
+                'id' => $this->classRoom?->id,
+                'name' => $this->classRoom?->name,
+            ]),
+
+            'feeGroup' => $this->whenLoaded('feeGroup', [
+                'id' => $this->feeGroup?->id,
+                'group' => $this->feeGroup?->group,
+                'amount' => $this->feeGroup?->amount,
+            ]),
+        ];
+    }
+}
