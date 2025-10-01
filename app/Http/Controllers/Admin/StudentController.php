@@ -27,7 +27,7 @@ class StudentController extends Controller
     {
 
         $students = Student::query()
-        ->select(['students.id', 'students.user_id', 'students.faculty_id', 'students.departement_id', 'students.class_room_id', 'students.fee_group_id', 'student_number', 'batch', 'semester', 'created_at'])
+        ->select(['students.id', 'students.user_id', 'students.faculty_id', 'students.departement_id', 'students.class_room_id', 'students.fee_group_id', 'student_number', 'batch', 'semester', 'students.created_at'])
         ->filter(request()->only(['search']))
         ->sorting(request()->only(['field', 'direction']))
         ->paginate(request()->load ?? 10);

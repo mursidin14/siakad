@@ -26,8 +26,6 @@ import { useState } from 'react';
 export default function Index(props) {
     const { data: students, meta, links } = props.students;
 
-    console.log(students)
-
     const [params, setParams] = useState(props.state);
 
     const onSortable = (field) => {
@@ -145,7 +143,7 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('fakulty_id')}
+                                            onClick={() => onSortable('faculty_id')}
                                         >
                                             Fakultas
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
@@ -247,15 +245,15 @@ export default function Index(props) {
                                         <TableCell className="flex items-center gap-x-2">
                                             <Avatar>
                                                 <AvatarImage src={student.avatar} />
-                                                <AvatarFallback>{student.user.name.substring(0, 1)}</AvatarFallback>
+                                                <AvatarFallback>{student.user?.name?.substring(0, 1) ?? '-'}</AvatarFallback>
                                             </Avatar>
                                             <span>{student.user.name}</span>
                                         </TableCell>
                                         <TableCell>{student.user.email}</TableCell>
                                         <TableCell>{student.faculty.name}</TableCell>
                                         <TableCell>{student.departement.name}</TableCell>
-                                        <TableCell>{student.classroom.name}</TableCell>
-                                        <TableCell>{student.feeGroup.group}</TableCell>
+                                        <TableCell>{student.classroom?.name ?? 'Belum ada kelas'}</TableCell>
+                                        <TableCell>{student.feeGroup?.group ?? 'Belum ada golongan ukt'}</TableCell>
                                         <TableCell>{student.student_number}</TableCell>
                                         <TableCell>{student.semester}</TableCell>
                                         <TableCell>{student.batch}</TableCell>

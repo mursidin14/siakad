@@ -66,15 +66,22 @@ class Student extends Model
 
     public function scopeFilter(Builder $query, array $filters): void
     {
-        $query->when($filters['search'] ?? null, function($query, $search) {
-            $query->whereAny([
-            'student_number',
-            'batch',
-            'semester',
-        ], 'REGEXP', $search)
-        ->orWhereHas('user', fn($query) => $query->where('name', 'email', 'REGEXP', $search))
-        ->orWhereHas('faculty', fn($query) => $query->where('name', 'REGEXP', $search))
-        ->orWhereHas('departement', fn($query) => $query->where('name', 'REGEXP', $search));
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('student_number', 'like', '%' . $search . '%')
+                    ->orWhere('batch', 'like', '%' . $search . '%')
+                    ->orWhere('semester', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('user', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('faculty', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('departement', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            });
         });
     }
 
@@ -83,17 +90,17 @@ class Student extends Model
     {
         $query->when($sorts['field'] ?? null && $sorts['direction'] ?? null, function($query) use ($sorts) {
             match($sorts['field']) {
-                'faculty_id' => $query->select('faculties.*')->join('faculties', 'students.faculty_id', '=', 'faculties.id')
+                'faculty_id' => $query->join('faculties', 'students.faculty_id', '=', 'faculties.id')
+                ->orderBy('faculties.name', $sorts['direction']),
+                'departement_id' => $query->join('departements', 'students.departement_id', '=', 'departements.id')
+                ->orderBy('departements.name', $sorts['direction']),
+                'name' => $query->join('users', 'students.user_id', '=', 'users.id')
                 ->orderBy('users.name', $sorts['direction']),
-                'departement_id' => $query->select('departements.*')->join('departements', 'students.departement_id', '=', 'departements.id')
-                ->orderBy('users.name', $sorts['direction']),
-                'name' => $query->select('users.*')->join('users', 'students.user_id', '=', 'users.id')
-                ->orderBy('users.name', $sorts['direction']),
-                'email' => $query->select('users.*')->join('users', 'students.user_id', '=', 'users.id')
+                'email' => $query->join('users', 'students.user_id', '=', 'users.id')
                 ->orderBy('users.email', $sorts['direction']),
-                'fee_group_id' => $query->select('fee_groups.*')->join('fee_groups', 'students.fee_group_id', '=', 'fee_groups.id')
+                'fee_group_id' => $query->join('fee_groups', 'students.fee_group_id', '=', 'fee_groups.id')
                 ->orderBy('fee_groups.group', $sorts['direction']),
-                'classroom_id' => $query->select('class_rooms.*')->join('class_rooms', 'students.class_room_id', '=', 'class_rooms.id')
+                'classroom_id' => $query->join('class_rooms', 'students.class_room_id', '=', 'class_rooms.id')
                 ->orderBy('class_rooms.name', $sorts['direction']),
                 default => $query->orderBy($sorts['field'], $sorts['direction']),
             };
