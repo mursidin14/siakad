@@ -23,7 +23,6 @@ export default function Index(props) {
         _method: props.page_settings.method
     });
 
-    console.log(props.students)
 
     const onHandleSubmit = (e) => {
         e.preventDefault();

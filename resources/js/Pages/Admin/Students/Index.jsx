@@ -297,4 +297,4 @@ export default function Index(props) {
     );
 }
 
-Index.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;
+Index.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />

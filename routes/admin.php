@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DepartementController;
 use App\Http\Controllers\Admin\FeeGroupsController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -98,7 +99,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
     });
 
 
-     // mahasiswa Navigation
+    // Students Navigation
     Route::controller(StudentController::class)->group(function() {
         Route::get('students', 'index')->name('admin.students.index');
         Route::get('students/create', 'create')->name('admin.students.create');
@@ -106,6 +107,17 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
         Route::get('students/edit/{student:student_number}', 'edit')->name('admin.students.edit');
         Route::put('students/edit/{student:student_number}', 'update')->name('admin.students.update');
         Route::delete('students/destroy/{student:student_number}', 'destroy')->name('admin.students.destroy');
+    });
+
+
+     // Teachers Navigation
+    Route::controller(TeacherController::class)->group(function() {
+        Route::get('teachers', 'index')->name('admin.teachers.index');
+        Route::get('teachers/create', 'create')->name('admin.teachers.create');
+        Route::post('teachers/create', 'store')->name('admin.teachers.store');
+        Route::get('teachers/edit/{teacher:teacher_number}', 'edit')->name('admin.teachers.edit');
+        Route::put('teachers/edit/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
+        Route::delete('teachers/destroy/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
     });
 
 });
