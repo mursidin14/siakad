@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TeacherRequest extends FormRequest
+class OperatorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,43 +33,37 @@ class TeacherRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($this->teacher?->user),
+                Rule::unique('users')->ignore($this->operator?->user),
             ],
-            'password' => Rule::when($this->routeIs('admin.teachers.store'), [
+            'password' => Rule::when($this->routeIs('admin.operators.store'), [
                 'required',
                 'min:8',
                 'max:255',
             ]),
-            Rule::when($this->routeIs('admin.teachers.update'), [
+            Rule::when($this->routeIs('admin.operators.update'), [
                 'nullable',
                 'min:8',
                 'max:255',
             ]),
-            'avatar' => [
-                'nullable',
-                'mimes:png, jpg, jpeg, webp',
-                'max:2048'
-            ],
-            'faculty_id' => [
+           'faculty_id' => [
                 'required',
                 'exists:faculties,id'
-            ],
-            'departement_id' => [
+           ],
+           'departement_id' => [
                 'required',
-                'exists:departements,id'
-            ],
-            'teacher_number' => [
-                'required',
-                'string',
-                'min:3',
-                'max:13',
-            ],
-            'academic_title' => [
+                'exists:departements,id',
+           ],
+           'employee_number' => [
                 'required',
                 'string',
                 'min:3',
-                'max:255',
-            ],
+                'max:13'
+           ],
+           'avatar' => [
+                'nullable',
+                'mimes:png, jpg, jpeg, webp',
+                'max:2048',
+           ],
         ];
     }
 
@@ -81,11 +75,7 @@ class TeacherRequest extends FormRequest
             'email' => 'Email',
             'password' => 'Password',
             'avatar' => 'Foto Profil',
-            'teacher_number' => 'Nomor Induk',
-            'academic_title' => 'Gelar',
-            'user_id' => 'User',
-            'faculty_id' => 'Fakultas',
-            'departement_id' => 'Program Studi',
+            'employee_number' => 'Nomor Induk',
         ];
     }
 }

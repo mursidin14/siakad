@@ -13,12 +13,12 @@ import UseFilter from '@/hooks/UseFilter'
 import AppLayout from '@/Layouts/AppLayout'
 import { deleteAction, formatDateIndo } from '@/lib/utils'
 import { Link } from '@inertiajs/react'
-import { IconArrowsDownUp, IconPencil, IconPlus, IconRefresh, IconTrash, IconUsersGroup } from '@tabler/icons-react'
+import { IconArrowsDownUp, IconPencil, IconPlus, IconRefresh, IconTrash, IconUser } from '@tabler/icons-react'
 import React, { useState } from 'react'
 
 export default function Index(props) {
 
-    const { data: teachers, meta, links } = props.teachers;
+    const { data: operators, meta, links } = props.operators;
 
     const [params, setParams] = useState(props.state)
 
@@ -31,9 +31,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.teachers.index'),
+        route: route('admin.operators.index'),
         values: params,
-        only: ['teachers'],
+        only: ['operators'],
     });
 
   return (
@@ -42,11 +42,11 @@ export default function Index(props) {
                 <HeaderTitle 
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconUsersGroup}
+                    icon={IconUser}
                 />
 
                 <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
-                    <Link href={route('admin.teachers.create')}>
+                    <Link href={route('admin.operators.create')}>
                         <IconPlus className='size-4' />
                         Tambah
                     </Link>
@@ -87,11 +87,11 @@ export default function Index(props) {
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className='p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6'>
-                    {teachers.length === 0 ? (
+                    {operators.length === 0 ? (
                         <EmptyState 
-                            icon={IconUsersGroup}
-                            title='Tidak ada mahasiswa'
-                            subtitle='Mulailah dengan membuat mahasiswa baru'
+                            icon={IconUser}
+                            title='Tidak ada operator'
+                            subtitle='Mulailah dengan membuat operator baru'
                         />
                     ):(
                         <Table>
@@ -161,21 +161,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('teacher_number')}
+                                            onClick={() => onSortable('employee_number')}
                                         >
-                                            Nomor Induk
-                                            <span className='ml-2 flex-none rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant='ghost'
-                                            className='group inline-flex'
-                                            onClick={() => onSortable('academic_title')}
-                                        >
-                                            Gelar
+                                            Nomor Karyawan
                                             <span className='ml-2 flex-none rounded text-muted-foreground'>
                                                 <IconArrowsDownUp className='size-4' />
                                             </span>
@@ -194,29 +182,28 @@ export default function Index(props) {
                                 </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {teachers.map((teacher, index) => (
+                                    {operators.map((operator, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                             <TableCell className="flex items-center gap-x-2">
                                                 <Avatar>
-                                                    <AvatarImage src={teacher.avatar} />
-                                                    <AvatarFallback>{teacher.user?.name?.substring(0, 1)}</AvatarFallback>
+                                                    <AvatarImage src={operator.avatar} />
+                                                    <AvatarFallback>{operator.user?.name?.substring(0, 1)}</AvatarFallback>
                                                 </Avatar>
-                                                <span>{teacher.user.name}</span>
+                                                <span>{operator.user.name}</span>
                                             </TableCell>
-                                            <TableCell>{teacher.user.email}</TableCell>
-                                            <TableCell>{teacher.faculty.name}</TableCell>
-                                            <TableCell>{teacher.departement.name}</TableCell>
-                                            <TableCell>{teacher.teacher_number}</TableCell>
-                                            <TableCell>{teacher?.academic_title ?? 'Masukkan Gelar'}</TableCell>
-                                            <TableCell>{formatDateIndo(teacher.created_at)}</TableCell>
+                                            <TableCell>{operator.user.email}</TableCell>
+                                            <TableCell>{operator.faculty.name}</TableCell>
+                                            <TableCell>{operator.departement.name}</TableCell>
+                                            <TableCell>{operator.employee_number}</TableCell>
+                                            <TableCell>{formatDateIndo(operator.created_at)}</TableCell>
                                             <TableCell>
                                                 <div className='flex items-center gap-x-1'>
                                                     <Button
                                                         variant='blue'
                                                         size='sm'
                                                     >
-                                                        <Link href={route('admin.teachers.edit', [teacher])}>
+                                                        <Link href={route('admin.operators.edit', [operator])}>
                                                             <IconPencil className='size-4' />
                                                         </Link>
                                                     </Button>
@@ -229,7 +216,7 @@ export default function Index(props) {
                                                                 <IconTrash className='size' />
                                                             </Button>
                                                         }
-                                                        action={() => deleteAction(route('admin.teachers.destroy', [teacher]))}
+                                                        action={() => deleteAction(route('admin.operators.destroy', [operator]))}
                                                     />
                                                 </div>
                                            </TableCell>
@@ -243,7 +230,7 @@ export default function Index(props) {
                     <p className='text-sm text-muted-foreground'>
                         Menampilkan <span className='font-medium text-blue-600'>
                             {meta.from ?? 0}</span> dari{' '}        
-                            {meta.total} Dosen
+                            {meta.total} Operator
                     </p>
                     <div className='overflow-x-auto'>
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}
