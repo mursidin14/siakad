@@ -11,7 +11,6 @@ import { IconArrowLeft, IconCheck, IconCircleKey } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         name: props.role.name ?? '',
         _method: props.page_settings.method,

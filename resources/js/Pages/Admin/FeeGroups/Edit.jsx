@@ -11,7 +11,6 @@ import { IconArrowLeft, IconCheck, IconDroplets } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         group: props.feeGroup.group ?? 1,
         amount: props.feeGroup.amount ?? 0,
@@ -80,7 +79,6 @@ export default function Edit(props) {
                                 {errors.amount && <InputError message={errors.amount} />}
                             </div>
                         </div>
-                        
 
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">
                             <Button type="button" variant="ghost" size="xl" onClick={onHandleReset}>

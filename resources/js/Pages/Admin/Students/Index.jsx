@@ -13,14 +13,7 @@ import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import {
-    IconArrowsDownUp,
-    IconPencil,
-    IconPlus,
-    IconRefresh,
-    IconTrash,
-    IconUser,
-} from '@tabler/icons-react';
+import { IconArrowsDownUp, IconPencil, IconPlus, IconRefresh, IconTrash, IconUser } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
@@ -245,7 +238,9 @@ export default function Index(props) {
                                         <TableCell className="flex items-center gap-x-2">
                                             <Avatar>
                                                 <AvatarImage src={student.avatar} />
-                                                <AvatarFallback>{student.user?.name?.substring(0, 1) ?? '-'}</AvatarFallback>
+                                                <AvatarFallback>
+                                                    {student.user?.name?.substring(0, 1) ?? '-'}
+                                                </AvatarFallback>
                                             </Avatar>
                                             <span>{student.user.name}</span>
                                         </TableCell>
@@ -297,4 +292,4 @@ export default function Index(props) {
     );
 }
 
-Index.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />
+Index.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;

@@ -139,8 +139,9 @@ export default function Create(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.departements.find((departement) => departement.value == data.departement_id)
-                                                ?.label ?? 'Pilih Program Studi'}
+                                            {props.departements.find(
+                                                (departement) => departement.value == data.departement_id,
+                                            )?.label ?? 'Pilih Program Studi'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -177,8 +178,8 @@ export default function Create(props) {
                                 {errors.class_room_id && <InputError message={errors.class_room_id} />}
                             </div>
 
-                            <div className='col-span-full'>
-                                <Label htmlFor='fee_group_id'>Golongan Ukt</Label>
+                            <div className="col-span-full">
+                                <Label htmlFor="fee_group_id">Golongan Ukt</Label>
                                 <Select
                                     defaultValue={data.fee_group_id}
                                     onValueChange={(value) => setData('fee_group_id', value)}

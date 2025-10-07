@@ -11,7 +11,6 @@ import { IconArrowLeft, IconCheck, IconDroplets } from '@tabler/icons-react';
 import { toast } from 'sonner';
 
 export default function Create(props) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         group: 1,
         amount: 0,
