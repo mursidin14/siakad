@@ -13,11 +13,12 @@ import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBook, IconCalendar, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { IconArrowsDownUp, IconBook, IconCalendar, IconMoneybag, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { Icon } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Index(props) {
-    const { data: schedules, meta, links } = props.schedules;
+    const { data: fees, meta, links } = props.fees;
 
     const [params, setParams] = useState(props.state);
 
@@ -30,9 +31,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.schedules.index'),
+        route: route('admin.fees.index'),
         values: params,
-        only: ['schedules'],
+        only: ['fees'],
     });
 
     return (
@@ -41,15 +42,8 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconCalendar}
+                    icon={IconMoneybag}
                 />
-
-                <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.schedules.create')}>
-                        <IconPlus className="size-4" />
-                        Tambah
-                    </Link>
-                </Button>
             </div>
 
             <Card>
@@ -86,11 +80,11 @@ export default function Index(props) {
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className="p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
-                    {schedules.length === 0 ? (
+                    {fees.length === 0 ? (
                         <EmptyState
-                            icon={IconBook}
-                            title="Tidak ada jadwal"
-                            subtitle="Mulailah dengan membuat jadwal baru"
+                            icon={IconMoneybag}
+                            title="Tidak ada biaya"
+                            subtitle="Mulailah dengan membuat biaya baru"
                         />
                     ) : (
                         <Table>
@@ -112,9 +106,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('faculty_id')}
+                                            onClick={() => onSortable('student_id')}
                                         >
-                                            Fakultas
+                                            Mahasiswa
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -124,9 +118,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('departement_id')}
+                                            onClick={() => onSortable('semester')}
                                         >
-                                            Program Studi
+                                            Semester
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -136,9 +130,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('course_id')}
+                                            onClick={() => onSortable('fee_code')}
                                         >
-                                            Mata Kuliah
+                                            Kode
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -148,57 +142,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('class_room_id')}
+                                            onClick={() => onSortable('fee_group_id')}
                                         >
-                                            Kelas
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('start_time')}
-                                        >
-                                            Jam Mulai
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('end_time')}
-                                        >
-                                            Jam Selesai
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('day_of_week')}
-                                        >
-                                            Hari
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('quota')}
-                                        >
-                                            Kuota
+                                            Golongan UKT
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -210,7 +156,7 @@ export default function Index(props) {
                                             className="group inline-flex"
                                             onClick={() => onSortable('academic_year_id')}
                                         >
-                                            Tahun Ajaran
+                                            Tahun Akademik
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -228,41 +174,32 @@ export default function Index(props) {
                                             </span>
                                         </Button>
                                     </TableHead>
-                                    <TableHead>Aksi</TableHead>
+                                    <TableHead>
+                                        <Button
+                                            variant="ghost"
+                                            className="group inline-flex"
+                                            onClick={() => onSortable('fee_status')}
+                                        >
+                                            Status
+                                            <span className="ml-2 flex-none rounded text-muted-foreground">
+                                                <IconArrowsDownUp className="size-4" />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {schedules.map((schedule, index) => (
+                                {fees.map((fee, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                        <TableCell>{schedule.faculty.name}</TableCell>
-                                        <TableCell>{schedule.departement.name}</TableCell>
-                                        <TableCell>{schedule.course.name}</TableCell>
-                                        <TableCell>{schedule.classRoom?.name ?? 'Belum ada kelas'}</TableCell>
-                                        <TableCell>{schedule.start_time ?? 'Belum ada waktu mulai'}</TableCell>
-                                        <TableCell>{schedule.end_time ?? 'Belum ada waktu selesai'}</TableCell>
-                                        <TableCell>{schedule.day_of_week ?? 'Belum ada hari'}</TableCell>
-                                        <TableCell>{schedule.quota}</TableCell>
-                                        <TableCell>{schedule.academicYear?.name ?? 'Belum ada tahun akademik'}</TableCell>
-                                        <TableCell>{formatDateIndo(schedule.created_at)}</TableCell>
+                                        <TableCell>{fee.student?.user?.name}</TableCell>
+                                        <TableCell>{fee.semester ?? 'Belum ada semester'}</TableCell>
+                                        <TableCell>{fee.fee_code}</TableCell>
+                                        <TableCell>{fee.feeGroup?.name}</TableCell>
+                                        <TableCell>{fee.academicYear?.name ?? 'Belum ada tahun akademik'}</TableCell>
+                                        <TableCell>{formatDateIndo(fee.created_at)}</TableCell>
                                         <TableCell>
-                                            <div className="flex items-center gap-x-1">
-                                                <Button variant="blue" size="sm">
-                                                    <Link href={route('admin.schedules.edit', [schedule])}>
-                                                        <IconPencil className="size-4" />
-                                                    </Link>
-                                                </Button>
-                                                <AlertAction
-                                                    trigger={
-                                                        <Button variant="red" size="sm">
-                                                            <IconTrash className="size" />
-                                                        </Button>
-                                                    }
-                                                    action={() =>
-                                                        deleteAction(route('admin.schedules.destroy', [schedule]))
-                                                    }
-                                                />
-                                            </div>
+                                            {fee.status}
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -273,7 +210,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between gap-y-2 border-t py-3 lg:flex-row">
                     <p className="text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-blue-600">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} Mata kuliah
+                        {meta.total} Biaya Uang Kuliah
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\DepartementController;
+use App\Http\Controllers\Admin\FeeController;
 use App\Http\Controllers\Admin\FeeGroupsController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\RoleController;
@@ -157,6 +158,10 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function () {
         Route::put('schedules/edit/{schedule}', 'update')->name('admin.schedules.update');
         Route::delete('schedules/destroy/{schedule}', 'destroy')->name('admin.schedules.destroy');
     });
+
+
+    // Fee Navigation
+    Route::get('fees', [FeeController::class, 'index'])->name('admin.fees.index');
 
 });
 

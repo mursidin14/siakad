@@ -97,7 +97,7 @@ export default function SideBarResponsive({ url, auth }) {
 
                         <div className="px-3 py-2 text-xs font-medium text-white">Pembayaran</div>
                         <NavLink
-                            url="#"
+                            url={route('admin.fees.index')}
                             active={url.startsWith('/admin/fees')}
                             title={'Uang Kuliah Tunggal'}
                             icon={IconMoneybag}
