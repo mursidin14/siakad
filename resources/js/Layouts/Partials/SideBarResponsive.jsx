@@ -141,15 +141,15 @@ export default function SideBarResponsive({ url, auth }) {
                 {auth.roles.some((role) => ['Operator'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
-                            active={url.startsWith('/teacher/dashboard')}
+                            url={route('operator.dashboard')}
+                            active={url.startsWith('/operator/dashboard')}
                             title={'Dashboard'}
                             icon={IconLayout2}
                         />
 
                         <div className="px-3 py-2 text-xs font-medium text-white">Pengguna</div>
                         <NavLink
-                            url="#"
+                            url={route('operator.students.index')}
                             active={url.startsWith('/operator/students')}
                             title={'Mahasiswa'}
                             icon={IconUser}

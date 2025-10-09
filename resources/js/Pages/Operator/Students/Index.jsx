@@ -30,7 +30,7 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.students.index'),
+        route: route('operator.students.index'),
         values: params,
         only: ['students'],
     });
@@ -45,7 +45,7 @@ export default function Index(props) {
                 />
 
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.students.create')}>
+                    <Link href={route('operator.students.create')}>
                         <IconPlus className="size-4" />
                         Tambah
                     </Link>
@@ -160,7 +160,7 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('class_room_id')}
+                                            onClick={() => onSortable('classroom_id')}
                                         >
                                             Kelas
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
@@ -247,7 +247,7 @@ export default function Index(props) {
                                         <TableCell>{student.user.email}</TableCell>
                                         <TableCell>{student.faculty.name}</TableCell>
                                         <TableCell>{student.departement.name}</TableCell>
-                                        <TableCell>{student.classRoom?.name ?? 'Belum ada kelas'}</TableCell>
+                                        <TableCell>{student.classroom?.name ?? 'Belum ada kelas'}</TableCell>
                                         <TableCell>{student.feeGroup?.group ?? 'Belum ada golongan ukt'}</TableCell>
                                         <TableCell>{student.student_number}</TableCell>
                                         <TableCell>{student.semester}</TableCell>
@@ -256,7 +256,7 @@ export default function Index(props) {
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant="blue" size="sm">
-                                                    <Link href={route('admin.students.edit', [student])}>
+                                                    <Link href={route('operator.students.edit', [student])}>
                                                         <IconPencil className="size-4" />
                                                     </Link>
                                                 </Button>
@@ -267,7 +267,7 @@ export default function Index(props) {
                                                         </Button>
                                                     }
                                                     action={() =>
-                                                        deleteAction(route('admin.students.destroy', [student]))
+                                                        deleteAction(route('operator.students.destroy', [student]))
                                                     }
                                                 />
                                             </div>

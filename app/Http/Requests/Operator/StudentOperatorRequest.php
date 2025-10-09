@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Operator;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StudentRequest extends FormRequest
+class StudentOperatorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->hasRole('Admin');
+        return auth()->check() && auth()->user()->hasRole('Operator');
     }
 
     /**
@@ -35,24 +35,16 @@ class StudentRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($this->student?->user),
             ],
-            'password' => Rule::when($this->routeIs('admin.students.store'), [
+            'password' => Rule::when($this->routeIs('operator.students.store'), [
                 'required',
                 'min:8',
                 'max:255',
             ]),
-            Rule::when($this->routeIs('admin.students.update'), [
+            Rule::when($this->routeIs('operator.students.update'), [
                 'nullable',
                 'min:8',
                 'max:255',
             ]),
-            'faculty_id' => [
-                'required',
-                'exists:faculties,id'
-            ],
-            'departement_id' => [
-                'required',
-                'exists:departements,id'
-            ],
             'class_room_id' => [
                 'required',
                 'exists:class_rooms,id'
@@ -69,22 +61,23 @@ class StudentRequest extends FormRequest
             ],
             'semester' => [
                 'required',
-                'int',
+                'integer',
             ],
             'batch' => [
                 'required',
-                'int',
+                'integer',
             ],
             'avatar' => [
                 'nullable',
-                'mimes:png, jpg, jpeg, webp',
-                'max:2048'
-            ]
+                'image',
+                'mimes:jpeg,png,jpg, webp',
+                'max:2048',
+            ],
         ];
     }
 
 
-    public function attributes(): array
+    public function attributes()
     {
         return [
             'name' => 'Nama',

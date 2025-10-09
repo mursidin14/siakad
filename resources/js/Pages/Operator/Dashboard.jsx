@@ -56,7 +56,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className="text-2xl font-bold">{props.count.classroom}</div>
+                    <div className="text-2xl font-bold">{props.count.classrooms}</div>
                 </CardStat>
 
                 {/* card stat Course */}
@@ -68,7 +68,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className="text-2xl font-bold">{props.count.course}</div>
+                    <div className="text-2xl font-bold">{props.count.courses}</div>
                 </CardStat>
             </div>
         </div>

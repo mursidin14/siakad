@@ -58,7 +58,7 @@ export default function Create(props) {
                     icon={IconUser}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.faculties.index')}>
+                    <Link href={route('admin.students.index')}>
                         <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>

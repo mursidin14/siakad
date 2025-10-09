@@ -16,8 +16,6 @@ export default function Edit(props) {
     const fileInputAvatar = useRef(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        faculty_id: props.student.faculty_id ?? null,
-        departement_id: props.student.departement_id ?? null,
         class_room_id: props.student.class_room_id ?? null,
         fee_group_id: props.student.fee_group_id ?? null,
         student_number: props.student.student_number ?? '',
@@ -58,7 +56,7 @@ export default function Edit(props) {
                     icon={IconUser}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.students.index')}>
+                    <Link href={route('operator.students.index')}>
                         <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>
@@ -106,53 +104,6 @@ export default function Edit(props) {
                                     onChange={onHandleChange}
                                 />
                                 {errors.password && <InputError message={errors.password} />}
-                            </div>
-
-                            <div className="col-span-full">
-                                <Label htmlFor="faculty_id">Fakultas</Label>
-                                <Select
-                                    defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.faculties.find((faculty) => faculty.value == data.faculty_id)
-                                                ?.label ?? 'Pilih Fakultas'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.faculties.map((faculty, index) => (
-                                            <SelectItem key={index} value={faculty.value}>
-                                                {faculty.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
-                            </div>
-
-                            <div className="col-span-full">
-                                <Label htmlFor="departement_id">Program Studi</Label>
-                                <Select
-                                    defaultValue={data.departement_id}
-                                    onValueChange={(value) => setData('departement_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.departements.find(
-                                                (departement) => departement.value == data.departement_id,
-                                            )?.label ?? 'Pilih Program Studi'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.departements.map((departement, index) => (
-                                            <SelectItem key={index} value={departement.value}>
-                                                {departement.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.departement_id && <InputError message={errors.departement_id} />}
                             </div>
 
                             <div className="col-span-full">

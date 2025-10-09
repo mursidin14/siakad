@@ -81,6 +81,10 @@ class Student extends Model
             })
             ->orWhereHas('departement', function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWHereHas('classroom', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('slug', 'like', '%' . $search . '%');
             });
         });
     }
