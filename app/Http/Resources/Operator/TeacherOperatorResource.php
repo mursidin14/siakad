@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
-class StudentOperatorResource extends JsonResource
+class TeacherOperatorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,8 @@ class StudentOperatorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'student_number' => $this->student_number,
-            'batch' => $this->batch,
-            'semester' => $this->semester,
+            'teacher_number' => $this->teacher_number,
+            'academic_title' => $this->academic_title,
             'created_at' => $this->created_at,
 
             'user' => $this->whenLoaded('user', [
@@ -28,17 +27,6 @@ class StudentOperatorResource extends JsonResource
                 'email' => $this->user?->email,
                 'avatar' => $this->user?->avatar ? Storage::url($this->user->avatar) : null,
             ]),
-
-            'classroom' => $this->whenLoaded('classRoom', [
-                'id' => $this->classRoom?->id,
-                'name' => $this->classRoom?->name,
-            ]),
-
-            'feeGroup' => $this->whenLoaded('feeGroup', [
-                'id' => $this->feeGroup?->id,
-                'group' => $this->feeGroup?->group,
-                'amount' => $this->feeGroup?->amount,
-            ])
         ];
     }
 }
