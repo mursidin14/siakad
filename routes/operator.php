@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\OperatorController;
+use App\Http\Controllers\Operator\ClassroomOperatorController;
 use App\Http\Controllers\Operator\DashboardOperatorController;
 use App\Http\Controllers\Operator\StudentController;
 use App\Http\Controllers\Operator\StudentOperatorController;
@@ -39,6 +40,17 @@ Route::prefix('operator')->middleware(['auth', 'role:Operator'])->group(function
         Route::get('teachers/edit/{teacher:teacher_number}', 'edit')->name('operator.teachers.edit');
         Route::put('teachers/edit/{teacher:teacher_number}', 'update')->name('operator.teachers.update');
         Route::delete('teachers/destroy/{teacher:teacher_number}', 'destroy')->name('operator.teachers.destroy');
+    });
+
+
+    // Kelas Navigation
+    Route::controller(ClassroomOperatorController::class)->group(function() {
+        Route::get('classrooms', 'index')->name('operator.classrooms.index');
+        Route::get('classrooms/create', 'create')->name('operator.classrooms.create');
+        Route::post('classrooms/create', 'store')->name('operator.classrooms.store');
+        Route::get('classrooms/edit/{classroom:slug}', 'edit')->name('operator.classrooms.edit');
+        Route::put('classrooms/edit/{classroom:slug}', 'update')->name('operator.classrooms.update');
+        Route::delete('classrooms/destroy/{classroom:slug}', 'destroy')->name('operator.classrooms.destroy');
     });
 
 });

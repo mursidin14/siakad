@@ -183,7 +183,7 @@ export default function Sidebar({ url, auth }) {
 
                         <div className="px-3 py-2 text-xs font-medium text-white">Akademik</div>
                         <NavLink
-                            url="#"
+                            url={route('operator.classrooms.index')}
                             active={url.startsWith('/operator/classrooms')}
                             title={'Kelas'}
                             icon={IconDoor}

@@ -15,7 +15,7 @@ export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: props.classroom.faculty_id ?? null,
         departement_id: props.classroom.departement_id ?? null,
-        academic_year_id: props.academic_year.name,
+        academic_year_id: props.academic_year.name ?? '',
         name: props.classroom.name ?? '',
         _method: props.page_settings.method,
     });
@@ -45,7 +45,7 @@ export default function Edit(props) {
                     icon={IconDoor}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.departements.index')}>
+                    <Link href={route('admin.classrooms.index')}>
                         <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>

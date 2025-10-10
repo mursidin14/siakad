@@ -13,8 +13,6 @@ import { toast } from 'sonner';
 
 export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        faculty_id: null,
-        departement_id: null,
         academic_year_id: props.academic_year.name,
         name: '',
         _method: props.page_settings.method,
@@ -45,7 +43,7 @@ export default function Create(props) {
                     icon={IconDoor}
                 />
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('admin.classrooms.index')}>
+                    <Link href={route('operator.classrooms.index')}>
                         <IconArrowLeft className="size-4" />
                         Kembali
                     </Link>
@@ -56,51 +54,18 @@ export default function Create(props) {
                 <CardContent className="p-6">
                     <form onSubmit={onHandleSubmit}>
                         <div className="grid grid-cols-1 gap-4">
-                            <div className="col-span-full">
-                                <Label htmlFor="faculty_id">Fakultas</Label>
-                                <Select
-                                    defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.faculties.find((faculty) => faculty.value == data.faculty_id)
-                                                ?.label ?? 'Pilih Fakultas'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.faculties.map((faculty, index) => (
-                                            <SelectItem key={index} value={faculty.value}>
-                                                {faculty.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
-                            </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="departement_id">Program Studi</Label>
-                                <Select
-                                    defaultValue={data.departement_id}
-                                    onValueChange={(value) => setData('departement_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.departements.find(
-                                                (departement) => departement.value == data.departement_id,
-                                            )?.label ?? 'Pilih Program Studi'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.departements.map((departement, index) => (
-                                            <SelectItem key={index} value={departement.value}>
-                                                {departement.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.departement_id && <InputError message={errors.departement_id} />}
+                                <Label htmlFor="name">Nama</Label>
+                                <Input
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    placeholder="Masukan nama kelas"
+                                    value={data.name}
+                                    onChange={onHandleChange}
+                                />
+                                {errors.name && <InputError message={errors.name} />}
                             </div>
 
                             <div className="col-span-full">
@@ -114,19 +79,6 @@ export default function Create(props) {
                                     disabled
                                 />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
-                            </div>
-
-                            <div className="col-span-full">
-                                <Label htmlFor="name">Nama</Label>
-                                <Input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder="Masukan nama kelas"
-                                    value={data.name}
-                                    onChange={onHandleChange}
-                                />
-                                {errors.name && <InputError message={errors.name} />}
                             </div>
                         </div>
 
