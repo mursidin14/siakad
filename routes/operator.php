@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Operator\ClassroomOperatorController;
 use App\Http\Controllers\Operator\CourseOperatorController;
 use App\Http\Controllers\Operator\DashboardOperatorController;
+use App\Http\Controllers\Operator\ScheduleOperatorController;
 use App\Http\Controllers\Operator\StudentController;
 use App\Http\Controllers\Operator\StudentOperatorController;
 use App\Http\Controllers\Operator\TeacherOperatorController;
@@ -63,5 +64,16 @@ Route::prefix('operator')->middleware(['auth', 'role:Operator'])->group(function
         Route::get('courses/edit/{course:code}', 'edit')->name('operator.courses.edit');
         Route::put('courses/edit/{course:code}', 'update')->name('operator.courses.update');
         Route::delete('courses/destroy/{course:code}', 'destroy')->name('operator.courses.destroy');
+    });
+
+
+    // Schedule Navigation
+    Route::controller(ScheduleOperatorController::class)->group(function() {
+        Route::get('schedules', 'index')->name('operator.schedules.index');
+        Route::get('schedules/create', 'create')->name('operator.schedules.create');
+        Route::post('schedules/create', 'store')->name('operator.schedules.store');
+        Route::get('schedules/edit/{schedule}', 'edit')->name('operator.schedules.edit');
+        Route::put('schedules/edit/{schedule}', 'update')->name('operator.schedules.update');
+        Route::delete('schedules/destroy/{schedule}', 'destroy')->name('operator.schedules.destroy');
     });
 });

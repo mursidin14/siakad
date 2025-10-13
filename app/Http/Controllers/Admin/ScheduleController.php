@@ -91,7 +91,7 @@ class ScheduleController extends Controller
     }
 
 
-    public function store(Request $request): RedirectResponse
+    public function store(ScheduleRequest $request): RedirectResponse
     {
         try{
             Schedule::create([

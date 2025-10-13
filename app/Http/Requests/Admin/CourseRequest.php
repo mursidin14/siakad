@@ -59,7 +59,6 @@ class CourseRequest extends FormRequest
                 'required',
                 'exists:academic_years,id'
             ],
-        
         ];
     }
 
