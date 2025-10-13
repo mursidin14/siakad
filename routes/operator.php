@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Operator\ClassroomOperatorController;
+use App\Http\Controllers\Operator\CourseOperatorController;
 use App\Http\Controllers\Operator\DashboardOperatorController;
 use App\Http\Controllers\Operator\StudentController;
 use App\Http\Controllers\Operator\StudentOperatorController;
@@ -53,4 +54,14 @@ Route::prefix('operator')->middleware(['auth', 'role:Operator'])->group(function
         Route::delete('classrooms/destroy/{classroom:slug}', 'destroy')->name('operator.classrooms.destroy');
     });
 
+
+    // Mata Kuliah Navigation
+    Route::controller(CourseOperatorController::class)->group(function() {
+        Route::get('courses', 'index')->name('operator.courses.index');
+        Route::get('courses/create', 'create')->name('operator.courses.create');
+        Route::post('courses/create', 'store')->name('operator.courses.store');
+        Route::get('courses/edit/{course:code}', 'edit')->name('operator.courses.edit');
+        Route::put('courses/edit/{course:code}', 'update')->name('operator.courses.update');
+        Route::delete('courses/destroy/{course:code}', 'destroy')->name('operator.courses.destroy');
+    });
 });

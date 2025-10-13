@@ -189,7 +189,7 @@ export default function Sidebar({ url, auth }) {
                             icon={IconDoor}
                         />
                         <NavLink
-                            url="#"
+                            url={route('operator.courses.index')}
                             active={url.startsWith('/operator/courses')}
                             title={'Mata Kuliah'}
                             icon={IconBook}
