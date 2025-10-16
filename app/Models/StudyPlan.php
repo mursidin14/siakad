@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\StudyPlanStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StudyPlan extends Model
 {
@@ -31,8 +32,8 @@ class StudyPlan extends Model
         return $this->belongsTo(AcademicYear::class);
     }
 
-    public function schedule()
+    public function schedules():BelongsToMany
     {
-        return $this->belongsToMany(Schedule::class, 'courses', 'id', 'course_id')->withTimestamps();
+        return $this->belongsToMany(Schedule::class, 'study_plan_schedule')->withTimestamps();
     }
 }

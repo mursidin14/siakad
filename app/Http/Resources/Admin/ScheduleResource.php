@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use function Termwind\parse;
-
 class ScheduleResource extends JsonResource
 {
     /**
@@ -23,6 +21,7 @@ class ScheduleResource extends JsonResource
             'end_time' => Carbon::parse($this->end_time)->format('H:i'),
             'day_of_week' => $this->day_of_week,
             'quota' => $this->quota,
+            'taken_quota' => $this->taken_quota,
             'created_at' => $this->created_at,
             'faculty' => $this->whenLoaded('faculty', [
                 'id' => $this->faculty?->id,

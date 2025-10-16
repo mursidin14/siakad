@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\ScheduleDay;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Schedule extends Model
 {
@@ -52,9 +54,9 @@ class Schedule extends Model
         return $this->belongsTo(AcademicYear::class);
     }
 
-    public function studyPlans()
+    public function studyPlans(): BelongsToMany
     {
-        return $this->hasManyThrough(StudyPlan::class, Course::class)->withTimestamps();
+        return $this->belongsToMany(StudyPlan::class, 'study_plan_schedule')->withTimestamps();
     }
 
 

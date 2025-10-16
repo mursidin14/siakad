@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('status')->default(StudyPlanStatus::PENDING->value);
             $table->string('notes')->nullable();
-            $table->string('semester')->default(1);
+            $table->unsignedInteger('semester')->default(1);
             $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->timestamps();

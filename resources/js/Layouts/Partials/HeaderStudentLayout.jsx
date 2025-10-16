@@ -53,7 +53,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                                         <div className="lg:max-10 hidden lg:block">
                                             <div className="flex space-x-4">
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('student.dashboard')}
                                                     active={url.startsWith('/student/dashboard')}
                                                     title="Dashboard"
                                                 />
@@ -63,7 +63,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                     title="Jadwal"
                                                 />
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('student.study-plans.index')}
                                                     active={url.startsWith('/student/study-plan')}
                                                     title="Kartu Rencana Studi"
                                                 />
@@ -131,7 +131,10 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                 <DropdownMenuSeparator />
 
                                                 <DropdownMenuItem asChild>
-                                                    <Link url={route('logout')} method="post" as="button">
+                                                    <Link 
+                                                        href={route('logout')} 
+                                                        method="POST" 
+                                                        as="button">
                                                         <IconLogout2 />
                                                         Logout
                                                     </Link>
@@ -148,7 +151,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                             <div className="space-y-1 px-2 pb-3 pt-2">
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('student.dashboard')}
                                     className={cn(
                                         url.startsWith('/student/dashboard')
                                             ? 'bg-blue-500 text-white'
@@ -174,7 +177,7 @@ export default function HeaderStudentLayout({ url, auth }) {
 
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('student.study-plans.index')}
                                     className={cn(
                                         url.startsWith('/student/study-plan')
                                             ? 'bg-blue-500 text-white'
@@ -230,15 +233,17 @@ export default function HeaderStudentLayout({ url, auth }) {
                                 </div>
 
                                 <div className="mt-3 space-y-1 px-2">
-                                    <Disclosure.Button
-                                        as="button"
-                                        url={route('logout')}
-                                        method="post"
-                                        className={
-                                            'block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-blue-500'
-                                        }
-                                    >
-                                        Logout
+                                    <Disclosure.Button as="div" className="w-full">
+                                        <Link
+                                            href={route('logout')}
+                                            method="post"
+                                            as="button"
+                                            className={
+                                                'block w-full rounded-md px-3 py-2 text-left text-base font-medium text-white hover:bg-blue-500'
+                                            }
+                                        >
+                                            Logout
+                                        </Link>
                                     </Disclosure.Button>
                                 </div>
                             </div>

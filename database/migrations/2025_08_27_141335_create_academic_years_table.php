@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->date(column: 'start_date');
-            $table->date(column: 'end_date')->nullable();
-            $table->string('semester')->default(value: AcademicYearSemester::ODD->value);
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('semester')->default(AcademicYearSemester::ODD->value);
             $table->boolean('is_active')->default(false);
             $table->timestamps();
         });

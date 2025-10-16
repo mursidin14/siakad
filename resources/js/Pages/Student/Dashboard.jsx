@@ -33,7 +33,7 @@ export default function Dashboard(props) {
                         iconClassName: 'text-white',
                     }}
                 >
-                    <div className="text-2xl font-bold">{props.count.reject}</div>
+                    <div className="text-2xl font-bold">{props.count.study_plans_reject}</div>
                 </CardStat>
                 <CardStat
                     data={{

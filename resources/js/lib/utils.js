@@ -52,13 +52,13 @@ export const formatToRupiah = (amount) => {
 
 export const STUDYPLANTSTATUS = {
     PENDING: 'Pending',
-    REJECT: 'Reject',
+    REJECTED: 'Rejected',
     APPROVED: 'Approved',
 };
 
 export const STUDYPLANSTATUSVARIANT = {
     [STUDYPLANTSTATUS.PENDING]: 'secondary',
-    [STUDYPLANTSTATUS.REJECT]: 'destructive',
+    [STUDYPLANTSTATUS.REJECTED]: 'destructive',
     [STUDYPLANTSTATUS.APPROVED]: 'success',
 };
 
