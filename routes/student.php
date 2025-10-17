@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Student\DashboardStudentController;
+use App\Http\Controllers\Student\ScheduleStudentController;
 use App\Http\Controllers\Student\StudyPlanController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,10 @@ Route::prefix('student')->middleware(['auth', 'role:Student'])->group(function (
         Route::post('study-plans/create', 'store')->name('student.study-plans.store');
         Route::get('study-plans/detail/{studyPlan}', 'show')->name('student.study-plans.show');
     });
+
+    
+    // Jadwal Navigation
+    Route::get('schedules', ScheduleStudentController::class)->name('student.schedules.index');
+
 
 });

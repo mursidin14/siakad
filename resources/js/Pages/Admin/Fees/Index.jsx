@@ -1,9 +1,7 @@
-import AlertAction from '@/Components/AlertAction';
 import EmptyState from '@/Components/EmptyState';
 import HeaderTitle from '@/Components/HeaderTitle';
 import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -11,10 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
-import { deleteAction, formatDateIndo } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBook, IconCalendar, IconMoneybag, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
-import { Icon } from 'lucide-react';
+import { formatDateIndo } from '@/lib/utils';
+import { IconArrowsDownUp, IconMoneybag, IconRefresh } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
@@ -198,9 +194,7 @@ export default function Index(props) {
                                         <TableCell>{fee.feeGroup?.name}</TableCell>
                                         <TableCell>{fee.academicYear?.name ?? 'Belum ada tahun akademik'}</TableCell>
                                         <TableCell>{formatDateIndo(fee.created_at)}</TableCell>
-                                        <TableCell>
-                                            {fee.status}
-                                        </TableCell>
+                                        <TableCell>{fee.status}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

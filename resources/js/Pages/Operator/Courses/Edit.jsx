@@ -138,7 +138,6 @@ export default function Edit(props) {
                                 </Select>
                                 {errors.teacher_id && <InputError message={errors.teacher_id} />}
                             </div>
-
                         </div>
 
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">

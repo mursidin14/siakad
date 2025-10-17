@@ -3,7 +3,6 @@ import EmptyState from '@/Components/EmptyState';
 import HeaderTitle from '@/Components/HeaderTitle';
 import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -13,7 +12,15 @@ import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBook, IconCalendar, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import {
+    IconArrowsDownUp,
+    IconBook,
+    IconCalendar,
+    IconPencil,
+    IconPlus,
+    IconRefresh,
+    IconTrash,
+} from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
@@ -217,7 +224,9 @@ export default function Index(props) {
                                         <TableCell>{schedule.end_time ?? 'Belum ada waktu selesai'}</TableCell>
                                         <TableCell>{schedule.day_of_week ?? 'Belum ada hari'}</TableCell>
                                         <TableCell>{schedule.quota}</TableCell>
-                                        <TableCell>{schedule.academicYear?.name ?? 'Belum ada tahun akademik'}</TableCell>
+                                        <TableCell>
+                                            {schedule.academicYear?.name ?? 'Belum ada tahun akademik'}
+                                        </TableCell>
                                         <TableCell>{formatDateIndo(schedule.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">

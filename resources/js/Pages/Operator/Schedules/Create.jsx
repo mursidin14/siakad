@@ -9,11 +9,9 @@ import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCalendar, IconCheck } from '@tabler/icons-react';
-import { useRef } from 'react';
 import { toast } from 'sonner';
 
 export default function Create(props) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         class_room_id: null,
         course_id: null,
@@ -63,7 +61,6 @@ export default function Create(props) {
                 <CardContent className="p-6">
                     <form onSubmit={onHandleSubmit}>
                         <div className="grid grid-cols-1 gap-4">
-
                             <div className="col-span-full">
                                 <Label htmlFor="class_room_id">Kelas</Label>
                                 <Select
@@ -95,8 +92,8 @@ export default function Create(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.courses.find((course) => course.value == data.course_id)
-                                                ?.label ?? 'Pilih Mata Kuliah'}
+                                            {props.courses.find((course) => course.value == data.course_id)?.label ??
+                                                'Pilih Mata Kuliah'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -143,8 +140,8 @@ export default function Create(props) {
                                     >
                                         <SelectTrigger>
                                             <SelectValue>
-                                                {props.days.find((day) => day.value == data.day_of_week)
-                                                    ?.label ?? 'Pilih Hari'}
+                                                {props.days.find((day) => day.value == data.day_of_week)?.label ??
+                                                    'Pilih Hari'}
                                             </SelectValue>
                                         </SelectTrigger>
                                         <SelectContent>
@@ -156,7 +153,7 @@ export default function Create(props) {
                                         </SelectContent>
                                     </Select>
                                     {errors.day_of_week && <InputError message={errors.day_of_week} />}
-                            </div>
+                                </div>
                             </div>
 
                             <div className="col-span-full">
@@ -171,7 +168,6 @@ export default function Create(props) {
                                 />
                                 {errors.quota && <InputError message={errors.quota} />}
                             </div>
-
                         </div>
 
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">

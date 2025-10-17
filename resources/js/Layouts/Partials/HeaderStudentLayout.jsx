@@ -58,7 +58,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                     title="Dashboard"
                                                 />
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('student.schedules.index')}
                                                     active={url.startsWith('/student/schedule')}
                                                     title="Jadwal"
                                                 />
@@ -131,10 +131,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                 <DropdownMenuSeparator />
 
                                                 <DropdownMenuItem asChild>
-                                                    <Link 
-                                                        href={route('logout')} 
-                                                        method="POST" 
-                                                        as="button">
+                                                    <Link href={route('logout')} method="POST" as="button">
                                                         <IconLogout2 />
                                                         Logout
                                                     </Link>
@@ -164,7 +161,7 @@ export default function HeaderStudentLayout({ url, auth }) {
 
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('student.schedules.index')}
                                     className={cn(
                                         url.startsWith('/student/schedule')
                                             ? 'bg-blue-500 text-white'

@@ -53,7 +53,6 @@ export default function Edit(props) {
                 <CardContent className="p-6">
                     <form onSubmit={onHandleSubmit}>
                         <div className="grid grid-cols-1 gap-4">
-
                             <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
                                 <Input
@@ -79,7 +78,6 @@ export default function Edit(props) {
                                 />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
-
                         </div>
 
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">

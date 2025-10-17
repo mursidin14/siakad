@@ -9,11 +9,9 @@ import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCalendar, IconCheck } from '@tabler/icons-react';
-import { useRef } from 'react';
 import { toast } from 'sonner';
 
 export default function Edit(props) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: props.schedule.faculty_id ?? null,
         departement_id: props.schedule.departement_id ?? null,
@@ -143,8 +141,8 @@ export default function Edit(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.courses.find((course) => course.value == data.course_id)
-                                                ?.label ?? 'Pilih Mata Kuliah'}
+                                            {props.courses.find((course) => course.value == data.course_id)?.label ??
+                                                'Pilih Mata Kuliah'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
@@ -191,8 +189,8 @@ export default function Edit(props) {
                                     >
                                         <SelectTrigger>
                                             <SelectValue>
-                                                {props.days.find((day) => day.value == data.day_of_week)
-                                                    ?.label ?? 'Pilih Hari'}
+                                                {props.days.find((day) => day.value == data.day_of_week)?.label ??
+                                                    'Pilih Hari'}
                                             </SelectValue>
                                         </SelectTrigger>
                                         <SelectContent>
@@ -204,7 +202,7 @@ export default function Edit(props) {
                                         </SelectContent>
                                     </Select>
                                     {errors.day_of_week && <InputError message={errors.day_of_week} />}
-                            </div>
+                                </div>
                             </div>
 
                             <div className="col-span-full">
@@ -242,7 +240,6 @@ export default function Edit(props) {
                                 </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
-
                         </div>
 
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">
