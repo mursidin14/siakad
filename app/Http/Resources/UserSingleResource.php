@@ -36,10 +36,14 @@ class UserSingleResource extends JsonResource
                     'id' => $this->student?->departement?->id,
                     'name' => $this->student?->departement?->name,
                 ],
-                'fee_group' => [
-                    'id' => $this->student?->fee_group?->id,
-                    'group' => $this->student?->fee_group?->group,
-                    'amount' => $this->student?->fee_group?->amount,
+                'classRoom' => [
+                    'id' => $this->student?->classRoom?->id,
+                    'name' => $this->student?->classRoom?->name,
+                ],
+                'feeGroup' => [
+                    'id' => $this->student?->feeGroup?->id,
+                    'group' => $this->student?->feeGroup?->group,
+                    'amount' => $this->student?->feeGroup?->amount,
                 ]
             ]),
 
