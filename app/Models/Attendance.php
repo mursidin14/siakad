@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
@@ -27,5 +28,10 @@ class Attendance extends Model
     public function classRoom()
     {
         return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where('status', true);
     }
 }

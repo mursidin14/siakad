@@ -115,7 +115,7 @@ export default function SideBarResponsive({ url, auth }) {
                 {auth.roles.some((role) => ['Teacher'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
+                            url={route('teacher.dashboard')}
                             active={url.startsWith('/teacher/dashboard')}
                             title={'Dashboard'}
                             icon={IconLayout2}
@@ -123,7 +123,7 @@ export default function SideBarResponsive({ url, auth }) {
 
                         <div className="px-3 py-2 text-xs font-medium text-white">Akademik</div>
                         <NavLink
-                            url="#"
+                            url={route('teacher.courses.index')}
                             active={url.startsWith('/teacher/courses')}
                             title={'Mata Kuliah'}
                             icon={IconBook}

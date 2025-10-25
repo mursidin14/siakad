@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Admin;
+namespace App\Http\Resources\Teacher;
 
+use App\Http\Resources\Admin\ScheduleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourseResource extends JsonResource
+class CourseScheduleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +17,8 @@ class CourseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'code' => $this->code,
+            'name' => $this->name,
             'credit' => $this->credit,
             'semester' => $this->semester,
             'created_at' => $this->created_at,
@@ -37,6 +38,7 @@ class CourseResource extends JsonResource
                 'id' => $this->academicYear?->id,
                 'name' => $this->academicYear?->name,
             ]),
+            'schedules' => ScheduleResource::collection($this->schedules),
         ];
     }
 }

@@ -43,7 +43,7 @@ class Student extends Model
         return $this->belongsTo(FeeGroup::class);
     }
 
-    public function attendance()
+    public function attendances()
     {
         return $this->hasMany(Attendance::class);
     }
