@@ -4,7 +4,13 @@ import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/Components/ui/dropdown-menu';
 import { Input } from '@/Components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import UseFilter from '@/hooks/UseFilter';
@@ -40,7 +46,6 @@ export default function Index(props) {
                     subtitle={props.page_settings.subtitle}
                     icon={IconBook}
                 />
-
             </div>
 
             <Card>
@@ -84,25 +89,23 @@ export default function Index(props) {
                             subtitle="Mulailah dengan membuat mata kuliah baru"
                         />
                     ) : (
-                        <ul role='list' className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3'>
+                        <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3">
                             {courses.map((course, index) => (
-                                <li key={index} className='overflow-hidden border rounded-xl border-secondary'>
-                                    <div className='flex items-center justify-between p-6 border-b border-secondary-900/5 gap-x-4 bg-gray-50'>
+                                <li key={index} className="overflow-hidden rounded-xl border border-secondary">
+                                    <div className="border-secondary-900/5 flex items-center justify-between gap-x-4 border-b bg-gray-50 p-6">
                                         <Link
                                             href={route('teacher.courses.show', [course])}
-                                            className='text-sm font-semibold leading-relaxed text-foreground'
+                                            className="text-sm font-semibold leading-relaxed text-foreground"
                                         >
                                             {course.name}
                                         </Link>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    variant='ghost'
-                                                >
-                                                    <IconDotsVertical className='size-4' />
+                                                <Button variant="ghost">
+                                                    <IconDotsVertical className="size-4" />
                                                 </Button>
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent className='w-56'>
+                                            <DropdownMenuContent className="w-56">
                                                 <DropdownMenuGroup>
                                                     <DropdownMenuItem asChild>
                                                         <Link href={route('teacher.courses.show', [course])}>
@@ -113,22 +116,22 @@ export default function Index(props) {
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>
-                                    <dl className='px-6 py-4 -my-3 text-sm leading-6 divide-y divide-gray-100'>
-                                        <div className='flex justify-between py-3 gap-x-4'>
-                                            <dt className='text-foreground'>Fakultas</dt>
-                                            <dd className='text-foreground font-medium'>{course.faculty?.name}</dd>
+                                    <dl className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
+                                        <div className="flex justify-between gap-x-4 py-3">
+                                            <dt className="text-foreground">Fakultas</dt>
+                                            <dd className="font-medium text-foreground">{course.faculty?.name}</dd>
                                         </div>
-                                        <div className='flex justify-between py-3 gap-x-4'>
-                                            <dt className='text-foreground'>Program Studi</dt>
-                                            <dd className='text-foreground font-medium'>{course.departement?.name}</dd>
+                                        <div className="flex justify-between gap-x-4 py-3">
+                                            <dt className="text-foreground">Program Studi</dt>
+                                            <dd className="font-medium text-foreground">{course.departement?.name}</dd>
                                         </div>
-                                        <div className='flex justify-between py-3 gap-x-4'>
-                                            <dt className='text-foreground'>Satuan Kredit Semester (SKS)</dt>
-                                            <dd className='text-foreground font-medium'>{course.credits}</dd>
+                                        <div className="flex justify-between gap-x-4 py-3">
+                                            <dt className="text-foreground">Satuan Kredit Semester (SKS)</dt>
+                                            <dd className="font-medium text-foreground">{course.credits}</dd>
                                         </div>
-                                        <div className='flex justify-between py-3 gap-x-4'>
-                                            <dt className='text-foreground'>Semester</dt>
-                                            <dd className='text-foreground font-medium'>{course.semester}</dd>
+                                        <div className="flex justify-between gap-x-4 py-3">
+                                            <dt className="text-foreground">Semester</dt>
+                                            <dd className="font-medium text-foreground">{course.semester}</dd>
                                         </div>
                                     </dl>
                                 </li>

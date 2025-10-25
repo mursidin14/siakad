@@ -1,22 +1,18 @@
-import AlertAction from '@/Components/AlertAction';
 import EmptyState from '@/Components/EmptyState';
 import HeaderTitle from '@/Components/HeaderTitle';
-import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
 import { Alert, AlertDescription } from '@/Components/ui/alert';
 import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
+import { Card, CardContent, CardHeader } from '@/Components/ui/card';
 import { Checkbox } from '@/Components/ui/checkbox';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu';
 import { Input } from '@/Components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
-import { Link, useForm } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBook, IconCheck, IconDoor, IconDotsVertical, IconPencil, IconPlus, IconRefresh, IconTrash, IconUser } from '@tabler/icons-react';
+import { useForm } from '@inertiajs/react';
+import { IconCheck, IconDoor, IconRefresh, IconUser } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -31,10 +27,10 @@ export default function Index(props) {
         only: ['students'],
     });
 
-    const {data, setData, post, errors, processing, reset} = useForm({
+    const { data, setData, post, errors, processing, reset } = useForm({
         attendances: [],
         grades: [],
-        _method: props.page_settings.method
+        _method: props.page_settings.method,
     });
 
     const onHandleSubmit = (e) => {
@@ -49,38 +45,41 @@ export default function Index(props) {
         });
     };
 
-
     const isAttendanceChecked = (attendances, studentId, section) => {
-        return attendances.some((attendance) => attendance.student_id === studentId && attendance.section === section && attendance.status)
+        return attendances.some(
+            (attendance) => attendance.student_id === studentId && attendance.section === section && attendance.status,
+        );
     };
 
     const updateAttendance = (attendances, setData, studentId, section, checked) => {
         const updateAttendance = attendances.filter(
-            (attendance) => !(attendance.student_id === studentId && attendance.section === section)
-        )
+            (attendance) => !(attendance.student_id === studentId && attendance.section === section),
+        );
 
-        if(checked){
+        if (checked) {
             updateAttendance.push({
                 student_id: studentId,
                 course_id: props.course.id,
                 class_room_id: props.classroom.id,
                 section: section,
-                status: true
+                status: true,
             });
         }
 
         setData('attendances', updateAttendance);
-    }
+    };
 
     const getGradeValue = (grades, studentId, category, section) => {
         return (
-            grades.find((grade) => grade.student_id === studentId && grade.category === category && grade.section === section)?.grade || ''
+            grades.find(
+                (grade) => grade.student_id === studentId && grade.category === category && grade.section === section,
+            )?.grade || ''
         );
     };
 
     const updateGrade = (grades, setData, studentId, category, section, gradeValue) => {
         const updateGrades = grades.filter(
-            (grade) => !(grade.student_id === studentId && grade.category === category && grade.section === section)
+            (grade) => !(grade.student_id === studentId && grade.category === category && grade.section === section),
         );
 
         updateGrades.push({
@@ -93,18 +92,17 @@ export default function Index(props) {
         });
 
         setData('grades', updateGrades);
-    }
-
+    };
 
     const getAttendanceStudent = (attendances, student_id, section) => {
-        return attendances.find((attendance) => attendance.student_id === student_id && attendance.section === section)
-    }
+        return attendances.find((attendance) => attendance.student_id === student_id && attendance.section === section);
+    };
 
     const getGradeStudent = (student_id, grades, category, section) => {
         return grades.find(
-            (grade) => grade.student_id === student_id && grade.category === category && grade.section === section
+            (grade) => grade.student_id === student_id && grade.category === category && grade.section === section,
         );
-    }
+    };
 
     return (
         <div className="flex w-full flex-col pb-32">
@@ -114,7 +112,6 @@ export default function Index(props) {
                     subtitle={props.page_settings.subtitle}
                     icon={IconDoor}
                 />
-
             </div>
 
             <Card>
@@ -135,14 +132,14 @@ export default function Index(props) {
                         </Button>
                     </div>
 
-                    <div className='space-y-4 px-6'>
-                        <Alert variant='destructive'>
+                    <div className="space-y-4 px-6">
+                        <Alert variant="destructive">
                             <AlertDescription>
                                 Harap isi dengan teliti, data yang sudah di perbaharui tidak bisa di edit kembali.
                             </AlertDescription>
                         </Alert>
                         {errors && Object.keys(errors).length > 0 && (
-                            <Alert variant='red'>
+                            <Alert variant="red">
                                 <AlertDescription>
                                     {typeof errors === 'string' ? (
                                         errors
@@ -169,40 +166,56 @@ export default function Index(props) {
                         />
                     ) : (
                         <form onSubmit={onHandleSubmit}>
-                            <Table className='w-full border'>
+                            <Table className="w-full border">
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead rowSpan='2'>#</TableHead>
-                                        <TableHead rowSpan='2'>Nama</TableHead>
-                                        <TableHead rowSpan='2'>Nomor Induk Mahasiswa</TableHead>
-                                        <TableHead colSpan='12' className='border'>Absesnsi</TableHead>
-                                        <TableHead colSpan='10' className='border'>Tugas</TableHead>
-                                        <TableHead rowSpan='2' className='border'>UTS</TableHead>
-                                        <TableHead rowSpan='2' className='border'>UAS</TableHead>
-                                        <TableHead colSpan='4' className='border'>Total</TableHead>
-                                        <TableHead colSpan='4' className='border'>Presentasi Nilai</TableHead>
-                                        <TableHead rowSpan='2' className='border'>Nilai Akhir</TableHead>
-                                        <TableHead rowSpan='2' className='border'>Huruf Mutu</TableHead>
+                                        <TableHead rowSpan="2">#</TableHead>
+                                        <TableHead rowSpan="2">Nama</TableHead>
+                                        <TableHead rowSpan="2">Nomor Induk Mahasiswa</TableHead>
+                                        <TableHead colSpan="12" className="border">
+                                            Absesnsi
+                                        </TableHead>
+                                        <TableHead colSpan="10" className="border">
+                                            Tugas
+                                        </TableHead>
+                                        <TableHead rowSpan="2" className="border">
+                                            UTS
+                                        </TableHead>
+                                        <TableHead rowSpan="2" className="border">
+                                            UAS
+                                        </TableHead>
+                                        <TableHead colSpan="4" className="border">
+                                            Total
+                                        </TableHead>
+                                        <TableHead colSpan="4" className="border">
+                                            Presentasi Nilai
+                                        </TableHead>
+                                        <TableHead rowSpan="2" className="border">
+                                            Nilai Akhir
+                                        </TableHead>
+                                        <TableHead rowSpan="2" className="border">
+                                            Huruf Mutu
+                                        </TableHead>
                                     </TableRow>
                                     <TableRow>
-                                        {Array.from({length: 12}).map((_, i) => (
-                                            <TableHead key={i} className='border'>
+                                        {Array.from({ length: 12 }).map((_, i) => (
+                                            <TableHead key={i} className="border">
                                                 {i + 1}
                                             </TableHead>
                                         ))}
-                                        {Array.from({length: 10}).map((_, i) => (
-                                            <TableHead key={i} className='border'>
+                                        {Array.from({ length: 10 }).map((_, i) => (
+                                            <TableHead key={i} className="border">
                                                 {i + 1}
                                             </TableHead>
                                         ))}
-                                        <TableHead className='border'>Absen</TableHead>
-                                        <TableHead className='border'>Tugas</TableHead>
-                                        <TableHead className='border'>UTS</TableHead>
-                                        <TableHead className='border'>UAS</TableHead>
-                                        <TableHead className='border'>Absen (10%)</TableHead>
-                                        <TableHead className='border'>Tugas (20%)</TableHead>
-                                        <TableHead className='border'>UTS (30%)</TableHead>
-                                        <TableHead className='border'>UAS (40%)</TableHead>
+                                        <TableHead className="border">Absen</TableHead>
+                                        <TableHead className="border">Tugas</TableHead>
+                                        <TableHead className="border">UTS</TableHead>
+                                        <TableHead className="border">UAS</TableHead>
+                                        <TableHead className="border">Absen (10%)</TableHead>
+                                        <TableHead className="border">Tugas (20%)</TableHead>
+                                        <TableHead className="border">UTS (30%)</TableHead>
+                                        <TableHead className="border">UAS (40%)</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -210,7 +223,7 @@ export default function Index(props) {
                                         <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
                                             <TableCell>
-                                                <div className='flex items-center gap-2'>
+                                                <div className="flex items-center gap-2">
                                                     <Avatar>
                                                         <AvatarImage src={student.avatar} />
                                                         <AvatarFallback>
@@ -221,7 +234,7 @@ export default function Index(props) {
                                                 </div>
                                             </TableCell>
                                             <TableCell>{student.student_number}</TableCell>
-                                            {Array.from({length: 12}).map((_, section) => {
+                                            {Array.from({ length: 12 }).map((_, section) => {
                                                 const attendance = getAttendanceStudent(
                                                     student.attendances,
                                                     student.id,
@@ -231,18 +244,16 @@ export default function Index(props) {
                                                 return (
                                                     <TableCell key={section}>
                                                         {attendance ? (
-                                                            <IconCheck className='text-green-500 size-4' />
-                                                        ): (
+                                                            <IconCheck className="size-4 text-green-500" />
+                                                        ) : (
                                                             <Checkbox
                                                                 id={`attendances_${student.id}_section_${section + 1}`}
-                                                                name='attendances'
-                                                                checked={
-                                                                    isAttendanceChecked(
-                                                                        data.attendances,
-                                                                        student.id,
-                                                                        section + 1,
-                                                                    )
-                                                                }
+                                                                name="attendances"
+                                                                checked={isAttendanceChecked(
+                                                                    data.attendances,
+                                                                    student.id,
+                                                                    section + 1,
+                                                                )}
                                                                 onCheckedChange={(checked) => {
                                                                     updateAttendance(
                                                                         data.attendances,
@@ -255,10 +266,10 @@ export default function Index(props) {
                                                             />
                                                         )}
                                                     </TableCell>
-                                                )
+                                                );
                                             })}
 
-                                            {Array.from({length: 10}).map((_, task) => {
+                                            {Array.from({ length: 10 }).map((_, task) => {
                                                 const grade = getGradeStudent(
                                                     student.id,
                                                     student.grades,
@@ -270,17 +281,16 @@ export default function Index(props) {
                                                     <TableCell key={task}>
                                                         {grade ? (
                                                             grade.grade
-                                                        ): (
+                                                        ) : (
                                                             <>
-                                                                <Input 
-                                                                    className='w-[60px]'
+                                                                <Input
+                                                                    className="w-[60px]"
                                                                     value={getGradeValue(
                                                                         data.grades,
                                                                         student.id,
                                                                         'tugas',
-                                                                        task + 1
+                                                                        task + 1,
                                                                     )}
-
                                                                     onChange={(e) => {
                                                                         updateGrade(
                                                                             data.grades,
@@ -288,28 +298,22 @@ export default function Index(props) {
                                                                             student.id,
                                                                             'tugas',
                                                                             task + 1,
-                                                                            e.target.value
-                                                                        )
+                                                                            e.target.value,
+                                                                        );
                                                                     }}
                                                                 />
                                                             </>
                                                         )}
                                                     </TableCell>
-                                                )
+                                                );
                                             })}
                                             <TableCell>
                                                 {getGradeStudent(student.id, student.grades, 'uts', null) ? (
                                                     getGradeStudent(student.id, student.grades, 'uts', null).grade
-                                                ): (
-                                                    <Input 
-                                                        className='w-[70px]'
-                                                        value={getGradeValue(
-                                                            data.grades,
-                                                            student.id,
-                                                            'uts',
-                                                            null
-                                                        )}
-
+                                                ) : (
+                                                    <Input
+                                                        className="w-[70px]"
+                                                        value={getGradeValue(data.grades, student.id, 'uts', null)}
                                                         onChange={(e) => {
                                                             updateGrade(
                                                                 data.grades,
@@ -317,8 +321,8 @@ export default function Index(props) {
                                                                 student.id,
                                                                 'uts',
                                                                 null,
-                                                                e.target.value
-                                                            )
+                                                                e.target.value,
+                                                            );
                                                         }}
                                                     />
                                                 )}
@@ -326,16 +330,10 @@ export default function Index(props) {
                                             <TableCell>
                                                 {getGradeStudent(student.id, student.grades, 'uas', null) ? (
                                                     getGradeStudent(student.id, student.grades, 'uas', null).grade
-                                                ): (
-                                                    <Input 
-                                                        className='w-[70px]'
-                                                        value={getGradeValue(
-                                                            data.grades,
-                                                            student.id,
-                                                            'uas',
-                                                            null
-                                                        )}
-
+                                                ) : (
+                                                    <Input
+                                                        className="w-[70px]"
+                                                        value={getGradeValue(data.grades, student.id, 'uas', null)}
                                                         onChange={(e) => {
                                                             updateGrade(
                                                                 data.grades,
@@ -343,14 +341,14 @@ export default function Index(props) {
                                                                 student.id,
                                                                 'uas',
                                                                 null,
-                                                                e.target.value
-                                                            )
+                                                                e.target.value,
+                                                            );
                                                         }}
                                                     />
                                                 )}
                                             </TableCell>
                                             <TableCell>{student.total.attendances_count}</TableCell>
-                                            <TableCell>{student.total?.tasks_count}</TableCell>
+                                            <TableCell>{student.total.task_count}</TableCell>
                                             <TableCell>{student.total.uts_count}</TableCell>
                                             <TableCell>{student.total.uas_count}</TableCell>
                                             <TableCell>{student.percentage.attendance_percentage}</TableCell>
@@ -364,8 +362,8 @@ export default function Index(props) {
                                 </TableBody>
                                 <TableFooter>
                                     <TableRow>
-                                        <TableCell colSpan='37'>
-                                            <Button variant='orange' type='submit' disabled={processing}>
+                                        <TableCell colSpan="37">
+                                            <Button variant="orange" type="submit" disabled={processing}>
                                                 <IconCheck />
                                                 Simpan
                                             </Button>

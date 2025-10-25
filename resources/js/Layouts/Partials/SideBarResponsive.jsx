@@ -129,7 +129,7 @@ export default function SideBarResponsive({ url, auth }) {
                             icon={IconBook}
                         />
                         <NavLink
-                            url="#"
+                            url={route('teacher.schedules.index')}
                             active={url.startsWith('/teacher/schedules')}
                             title={'Jadwal Kuliah'}
                             icon={IconCalendar}

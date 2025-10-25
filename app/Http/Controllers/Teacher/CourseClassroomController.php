@@ -54,10 +54,10 @@ class CourseClassroomController extends Controller
             'attendances' => fn($query) => $query->where('course_id', $course->id)->where('class_room_id', $classroom->id),
         ])
         ->withSum(
-            ['grades as tasks_count' => fn($query) => $query
+            ['grades as task_count' => fn($query) => $query
             ->where('course_id', $course->id)
             ->where('class_room_id', $classroom->id)
-            ->where('category', 'Tugas')
+            ->where('category', 'tugas')
             ->whereBetween('section', [1,10])],
           'grade'
         )
@@ -186,6 +186,9 @@ class CourseClassroomController extends Controller
             ->merge(collect($grades)->pluck('student_id'))
             ->unique()
             ->values();
+
+            Attendance::whereIn('student_id', $studentIds)->where('course_id', $course->id)->delete();
+            Grade::whereIn('student_id', $studentIds)->where('course_id', $course->id)->delete();
 
             $studyResult = StudyResult::query()
             ->whereIn('student_id', $studentIds)

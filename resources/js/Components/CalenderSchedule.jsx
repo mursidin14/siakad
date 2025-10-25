@@ -56,8 +56,8 @@ export default function CalenderSchedule({ days, schedules, student = null }) {
                         ))}
                     </div>
                 </div>
-              <div className="flex flex-auto">
-              <div className="sticky left-0 z-10 w-14 flex-none bg-white ring-1 ring-gray-100" />
+                <div className="flex flex-auto">
+                    <div className="sticky left-0 z-10 w-14 flex-none bg-white ring-1 ring-gray-100" />
                     <div className="grid flex-auto grid-cols-1 grid-rows-1">
                         {/* horizontal */}
                         <div
@@ -160,43 +160,45 @@ export default function CalenderSchedule({ days, schedules, student = null }) {
                             className="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
                             style={{ gridTemplateRows: '1.75rem repeat(288, minmax(0, 1fr)' }}
                         >
-                            {Object.entries(schedules).map(([startTime, days]) =>
-                                Object.entries(days).map(([day, schedule]) => {
-                                    const rowStart = caluculateRowStart(startTime);
-                                    const rowEnd = caluculateRowStart(schedule.end_time);
-                                    const colStart = calculateColumnStart(day);
+                            {schedules &&
+                                Object.entries(schedules).map(([startTime, days]) =>
+                                    Object.entries(days).map(([day, schedule]) => {
+                                        const rowStart = caluculateRowStart(startTime);
+                                        const rowEnd = caluculateRowStart(schedule.end_time);
+                                        const colStart = calculateColumnStart(day);
 
-                                    const bgColor = getRandomColor();
+                                        const bgColor = getRandomColor();
 
-                                    return (
-                                        <li
-                                            key={`${startTime}-${day}`}
-                                            className="relative mt-px flex"
-                                            style={{
-                                                gridRow: `${rowStart} / ${rowEnd}`,
-                                                gridColumnStart: colStart,
-                                            }}
-                                        >
-                                            <Link
-                                                href="#"
-                                                className={cn(
-                                                    'group absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5',
-                                                    bgColor,
-                                                )}
+                                        return (
+                                            <li
+                                                key={`${startTime}-${day}`}
+                                                className="relative mt-px flex"
+                                                style={{
+                                                    gridRow: `${rowStart} / ${rowEnd}`,
+                                                    gridColumnStart: colStart,
+                                                }}
                                             >
-                                                <p className="order-1 font-semibold text-white">{schedule.course}</p>
-                                                <p className="text-white">
-                                                    {startTime} - {schedule.end_time}
-                                                </p>
-                                            </Link>
-                                        </li>
-                                    );
-                                }),
-                            )}
+                                                <Link
+                                                    href="#"
+                                                    className={cn(
+                                                        'group absolute inset-1 flex flex-col overflow-y-auto rounded-lg p-2 text-xs leading-5',
+                                                        bgColor,
+                                                    )}
+                                                >
+                                                    <p className="order-1 font-semibold text-white">
+                                                        {schedule.course}
+                                                    </p>
+                                                    <p className="text-white">
+                                                        {startTime} - {schedule.end_time}
+                                                    </p>
+                                                </Link>
+                                            </li>
+                                        );
+                                    }),
+                                )}
                         </ol>
                     </div>
-          
-              </div>
+                </div>
             </div>
         </div>
     );

@@ -44,9 +44,9 @@ trait CalculatesFinalScore
     }
 
 
-    public function calculateTaskPercentage(int $taskCount, int $totalTasks = 10): float
+    public function calculateTaskPercentage(int $taskCount, int $totalTask = 10): float
     {
-        return round(($taskCount / $totalTasks) * 0.2, 2);
+        return round(($taskCount / $totalTask) * 0.2, 2);
     }
 
     public function calculateUTSPercentage(int $utsCount): float

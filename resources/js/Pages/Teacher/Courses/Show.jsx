@@ -6,7 +6,6 @@ import { Link } from '@inertiajs/react';
 import { IconDoor } from '@tabler/icons-react';
 
 export default function Show(props) {
-
     return (
         <div className="flex w-full flex-col pb-32">
             <div className="mb-8 flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:items-center">
@@ -15,7 +14,6 @@ export default function Show(props) {
                     subtitle={props.page_settings.subtitle}
                     icon={IconDoor}
                 />
-
             </div>
 
             <Card>
@@ -30,20 +28,20 @@ export default function Show(props) {
                             subtitle="Mulailah dengan membuat kelas baru"
                         />
                     ) : (
-                        <ul role='list' className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3'>
+                        <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3">
                             {props.course.schedules.map((schedule, index) => (
-                                <li key={index} className='overflow-hidden rounded-xl'>
-                                    <Link 
+                                <li key={index} className="overflow-hidden rounded-xl">
+                                    <Link
                                         href={route('teacher.classrooms.index', [schedule.course, schedule.classRoom])}
-                                        className='flex flex-col p-6 gap-x-4 bg-gray-50 hover:bg-blue-50'
-                                        >
-                                            <div className='text-lg font-bold leading-relaxed text-foreground'>
-                                                {schedule.classRoom?.name}
-                                            </div>
-                                            <div className='text-sm font-medium leading-relaxed text-muted-foreground'>
-                                                {schedule.faculty?.name} - {schedule.departement?.name}
-                                            </div>                                            
-                                        </Link>
+                                        className="flex flex-col gap-x-4 bg-gray-50 p-6 hover:bg-blue-50"
+                                    >
+                                        <div className="text-lg font-bold leading-relaxed text-foreground">
+                                            {schedule.classRoom?.name}
+                                        </div>
+                                        <div className="text-sm font-medium leading-relaxed text-muted-foreground">
+                                            {schedule.faculty?.name} - {schedule.departement?.name}
+                                        </div>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

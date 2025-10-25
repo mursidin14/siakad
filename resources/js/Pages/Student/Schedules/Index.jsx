@@ -21,7 +21,7 @@ export default function Index(props) {
             </div>
             <div className="flex flex-col gap-y-8">
                 <CalenderSchedule days={days} schedules={schedules} student={auth} />
-                <div className='sm:hidden'>
+                <div className="sm:hidden">
                     <Alert variant="destructive">
                         <AlertDescription>Jadwal hanya bisa dilihat dalam mode desktop</AlertDescription>
                     </Alert>

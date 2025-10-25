@@ -11,13 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import StudentLayout from '@/Layouts/StudentLayout';
-import { FEESTATUSVARIANT, formatDateIndo, formatToRupiah, STUDYPLANSTATUSVARIANT } from '@/lib/utils';
-import { Link, usePage } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBuilding, IconEye, IconMoneybag, IconPlus, IconRefresh } from '@tabler/icons-react';
+import { FEESTATUSVARIANT, formatDateIndo, formatToRupiah } from '@/lib/utils';
+import { usePage } from '@inertiajs/react';
+import { IconArrowsDownUp, IconMoneybag, IconRefresh } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
-
     const auth = usePage().props.auth.user;
 
     const { data: fees, meta, links } = props.fees;
@@ -53,55 +52,52 @@ export default function Index(props) {
 
                 {!props.checkFee && (
                     <div>
-                        <Alert variant='orange'>
+                        <Alert variant="orange">
                             <AlertTitle>Periode Pembayaran UKT Tahuna Ajaran {props.academic_year.name}</AlertTitle>
-                            <AlertDescription>
-                                Silahkan melakukan pembayaran ukt terlebih dahulu.
-                            </AlertDescription>
+                            <AlertDescription>Silahkan melakukan pembayaran ukt terlebih dahulu.</AlertDescription>
                         </Alert>
                     </div>
                 )}
 
-                {(props.fee && props.fee.status !== 'Sukses') || !props.fee && (
-                    <Card>
-                        <CardContent className='p-6 space-y-20'>
-                            <div>
-                                <Table className="w-full">
-                                    <TableHeader>
-                                        <TableRow>
-                                            <TableHead>Nama</TableHead>
-                                            <TableHead>Nomor Induk Mahasiswa</TableHead>
-                                            <TableHead>Semester</TableHead>
-                                            <TableHead>Kelas</TableHead>
-                                            <TableHead>Program Studi</TableHead>
-                                            <TableHead>Fakultas</TableHead>
-                                            <TableHead>Golongan</TableHead>
-                                            <TableHead>Total Tagihan</TableHead>
-                                            <TableHead>Aksi</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell>{auth.name}</TableCell>
-                                            <TableCell>{auth.student.student_number}</TableCell>
-                                            <TableCell>{auth.student.semester}</TableCell>
-                                            <TableCell>{auth.student.classRoom.name}</TableCell>
-                                            <TableCell>{auth.student.departement.name}</TableCell>
-                                            <TableCell>{auth.student.faculty.name}</TableCell>
-                                            <TableCell>{auth.student.feeGroup.group}</TableCell>
-                                            <TableCell>{formatToRupiah(auth.student.feeGroup.amount)}</TableCell>
-                                            <TableCell>
-                                                <Button variant='orange'>
-                                                    Bayar
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        </CardContent>
-                    </Card>
-                )}
+                {(props.fee && props.fee.status !== 'Sukses') ||
+                    (!props.fee && (
+                        <Card>
+                            <CardContent className="space-y-20 p-6">
+                                <div>
+                                    <Table className="w-full">
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>Nama</TableHead>
+                                                <TableHead>Nomor Induk Mahasiswa</TableHead>
+                                                <TableHead>Semester</TableHead>
+                                                <TableHead>Kelas</TableHead>
+                                                <TableHead>Program Studi</TableHead>
+                                                <TableHead>Fakultas</TableHead>
+                                                <TableHead>Golongan</TableHead>
+                                                <TableHead>Total Tagihan</TableHead>
+                                                <TableHead>Aksi</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell>{auth.name}</TableCell>
+                                                <TableCell>{auth.student.student_number}</TableCell>
+                                                <TableCell>{auth.student.semester}</TableCell>
+                                                <TableCell>{auth.student.classRoom.name}</TableCell>
+                                                <TableCell>{auth.student.departement.name}</TableCell>
+                                                <TableCell>{auth.student.faculty.name}</TableCell>
+                                                <TableCell>{auth.student.feeGroup.group}</TableCell>
+                                                <TableCell>{formatToRupiah(auth.student.feeGroup.amount)}</TableCell>
+                                                <TableCell>
+                                                    <Button variant="orange">Bayar</Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
 
                 {/* Filters IconBuilding departements */}
                 <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-center">
@@ -134,7 +130,11 @@ export default function Index(props) {
                 {/* Show Filters */}
                 <ShowFilter params={params} />
                 {fees.length === 0 ? (
-                    <EmptyState icon={IconMoneybag} title="Tidak ada Pembayaran" subtitle="Mulailah dengan membuat pembayaran baru" />
+                    <EmptyState
+                        icon={IconMoneybag}
+                        title="Tidak ada Pembayaran"
+                        subtitle="Mulailah dengan membuat pembayaran baru"
+                    />
                 ) : (
                     <Table>
                         <TableHeader>
@@ -234,9 +234,7 @@ export default function Index(props) {
                                     <TableCell>{fee.academicYear.name}</TableCell>
                                     <TableCell>{fee.semester}</TableCell>
                                     <TableCell>
-                                        <Badge variant={FEESTATUSVARIANT[fee.status]}>
-                                            {fee.status}
-                                        </Badge>
+                                        <Badge variant={FEESTATUSVARIANT[fee.status]}>{fee.status}</Badge>
                                     </TableCell>
                                     <TableCell>{formatDateIndo(fee.created_at)}</TableCell>
                                 </TableRow>

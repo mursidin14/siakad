@@ -1,4 +1,3 @@
-import AlertAction from '@/Components/AlertAction';
 import EmptyState from '@/Components/EmptyState';
 import HeaderTitle from '@/Components/HeaderTitle';
 import PaginationTable from '@/Components/PaginationTable';
@@ -11,12 +10,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import AppLayout from '@/Layouts/AppLayout';
-import { deleteAction, formatDateIndo } from '@/lib/utils';
+import { formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { IconArrowLeft, IconArrowsDownUp, IconBuilding, IconPencil, IconPlus, IconRefresh, IconTrash, IconUser } from '@tabler/icons-react';
+import { IconArrowLeft, IconArrowsDownUp, IconBuilding, IconRefresh } from '@tabler/icons-react';
 import { useState } from 'react';
-import Detail from './Detail';
 import Approve from './Approve';
+import Detail from './Detail';
 
 export default function Index(props) {
     const { data: studyPlans, meta, links } = props.studyPlans;
@@ -192,14 +191,14 @@ export default function Index(props) {
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
                                         <TableCell>
-                                            <div className='flex items-center gap-x-2'>
-                                              <Avatar>
-                                                <AvatarImage src={studyPlan.avatar} />
-                                                <AvatarFallback>
-                                                    {studyPlan.student?.name?.substring(0, 1) ?? '-'}
-                                                </AvatarFallback>
-                                             </Avatar>
-                                             <span>{studyPlan.student.name}</span>
+                                            <div className="flex items-center gap-x-2">
+                                                <Avatar>
+                                                    <AvatarImage src={studyPlan.avatar} />
+                                                    <AvatarFallback>
+                                                        {studyPlan.student?.name?.substring(0, 1) ?? '-'}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <span>{studyPlan.student.name}</span>
                                             </div>
                                         </TableCell>
                                         <TableCell>{studyPlan.student.classRoom?.name}</TableCell>
@@ -215,15 +214,14 @@ export default function Index(props) {
                                                 <Detail schedules={studyPlan.schedules} name={studyPlan.student.name} />
 
                                                 {/* approved */}
-                                                <Approve 
+                                                <Approve
                                                     name={studyPlan.student.name}
                                                     statuses={props.statuses}
                                                     action={route('operator.study-plans.approve', [
                                                         props.student,
-                                                        studyPlan
+                                                        studyPlan,
                                                     ])}
                                                 />
-
                                             </div>
                                         </TableCell>
                                     </TableRow>

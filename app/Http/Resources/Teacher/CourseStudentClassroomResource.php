@@ -28,13 +28,13 @@ class CourseStudentClassroomResource extends JsonResource
             'grades' => $this->whenLoaded('grades', CourseGradeResource::collection($this->grades)),
             'total' => [
                 'attendances_count' => $attendances_count = $this->attendances_count ?? 0,
-                'tasks_count' => $tasks_count = $this->task_count ?? 0,
+                'task_count' => $task_count = $this->task_count ?? 0,
                 'uts_count' => $uts_count = $this->uts_count ?? 0,
                 'uas_count' => $uas_count = $this->uas_count ?? 0,
             ],
             'percentage' => [
                 'attendance_percentage' => $attendance_percentage = round(($attendances_count / 12) * 10, 2),
-                'task_percentage' => $task_percentage = round(($tasks_count / 10) * 0.2, 2),
+                'task_percentage' => $task_percentage = round(($task_count / 10) * 0.2, 2),
                 'uts_percentage' => $uts_percentage = round($uts_count * 0.3, 2),
                 'uas_percentage' => $uas_percentage = round($uas_count * 0.4, 2),
             ],
