@@ -14,20 +14,20 @@ import AppLayout from '@/Layouts/AppLayout';
 import { deleteAction, formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import {
+    IconArrowLeft,
     IconArrowsDownUp,
     IconBuilding,
     IconMoneybag,
     IconPencil,
     IconPlus,
     IconRefresh,
-    IconSchool,
     IconTrash,
     IconUser,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
-    const { data: students, meta, links } = props.students;
+    const { data: fees, meta, links } = props.fees;
 
     const [params, setParams] = useState(props.state);
 
@@ -40,9 +40,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('operator.students.index'),
+        route: route('operator.fees.index', props.student),
         values: params,
-        only: ['students'],
+        only: ['fees'],
     });
 
     return (
@@ -51,13 +51,13 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconUser}
+                    icon={IconMoneybag}
                 />
 
                 <Button variant="orange" size="xl" className="w-full lg:w-auto" asChild>
-                    <Link href={route('operator.students.create')}>
-                        <IconPlus className="size-4" />
-                        Tambah
+                    <Link href={route('operator.students.index')}>
+                        <IconArrowLeft className="size-4" />
+                        Kembali
                     </Link>
                 </Button>
             </div>
@@ -96,11 +96,11 @@ export default function Index(props) {
                     <ShowFilter params={params} />
                 </CardHeader>
                 <CardContent className="p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6">
-                    {students.length === 0 ? (
+                    {fees.length === 0 ? (
                         <EmptyState
-                            icon={IconUser}
-                            title="Tidak ada mahasiswa"
-                            subtitle="Mulailah dengan membuat mahasiswa baru"
+                            icon={IconMoneybag}
+                            title="Tidak ada pembayaran"
+                            subtitle="Mulailah dengan membuat pembayaran baru"
                         />
                     ) : (
                         <Table>
@@ -122,45 +122,9 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('name')}
+                                            onClick={() => onSortable('fee_code')}
                                         >
-                                            Nama
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('email')}
-                                        >
-                                            Email
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('classroom_id')}
-                                        >
-                                            Kelas
-                                            <span className="ml-2 flex-none rounded text-muted-foreground">
-                                                <IconArrowsDownUp className="size-4" />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button
-                                            variant="ghost"
-                                            className="group inline-flex"
-                                            onClick={() => onSortable('fee_group_id')}
-                                        >
-                                            Golongan UKT
+                                            Kode Pembayaran
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -172,7 +136,7 @@ export default function Index(props) {
                                             className="group inline-flex"
                                             onClick={() => onSortable('student_number')}
                                         >
-                                            Nomor induk Mahasiswa
+                                            Nomor Induk Mahasiswa
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -194,9 +158,21 @@ export default function Index(props) {
                                         <Button
                                             variant="ghost"
                                             className="group inline-flex"
-                                            onClick={() => onSortable('batch')}
+                                            onClick={() => onSortable('academic_year_id')}
                                         >
-                                            Angkatan
+                                            Tahuna Ajaran
+                                            <span className="ml-2 flex-none rounded text-muted-foreground">
+                                                <IconArrowsDownUp className="size-4" />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button
+                                            variant="ghost"
+                                            className="group inline-flex"
+                                            onClick={() => onSortable('status')}
+                                        >
+                                            Status
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>
@@ -214,63 +190,19 @@ export default function Index(props) {
                                             </span>
                                         </Button>
                                     </TableHead>
-                                    <TableHead>Aksi</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {students.map((student, index) => (
+                                {fees.map((fee, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                        <TableCell className="flex items-center gap-x-2">
-                                            <Avatar>
-                                                <AvatarImage src={student.avatar} />
-                                                <AvatarFallback>
-                                                    {student.user?.name?.substring(0, 1) ?? '-'}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                            <span>{student.user.name}</span>
-                                        </TableCell>
-                                        <TableCell>{student.user.email}</TableCell>
-                                        <TableCell>{student.classroom?.name ?? 'Belum ada kelas'}</TableCell>
-                                        <TableCell>{student.feeGroup?.group ?? 'Belum ada golongan ukt'}</TableCell>
-                                        <TableCell>{student.student_number}</TableCell>
-                                        <TableCell>{student.semester}</TableCell>
-                                        <TableCell>{student.batch}</TableCell>
-                                        <TableCell>{formatDateIndo(student.created_at)}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-x-1">
-                                                <Button variant="purple" size="sm">
-                                                    <Link href={route('operator.study-plans.index', [student])}>
-                                                        <IconBuilding className="size-4" />
-                                                    </Link>
-                                                </Button>
-                                                <Button variant="green" size="sm">
-                                                    <Link href={route('operator.fees.index', [student])}>
-                                                        <IconMoneybag className="size-4" />
-                                                    </Link>
-                                                </Button>
-                                                <Button variant="yellow" size="sm">
-                                                    <Link href={route('operator.study-results.index', [student])}>
-                                                        <IconSchool className="size-4" />
-                                                    </Link>
-                                                </Button>
-                                                <Button variant="blue" size="sm">
-                                                    <Link href={route('operator.students.edit', [student])}>
-                                                        <IconPencil className="size-4" />
-                                                    </Link>
-                                                </Button>
-                                                <AlertAction
-                                                    trigger={
-                                                        <Button variant="red" size="sm">
-                                                            <IconTrash className="size" />
-                                                        </Button>
-                                                    }
-                                                    action={() =>
-                                                        deleteAction(route('operator.students.destroy', [student]))
-                                                    }
-                                                />
-                                            </div>
-                                        </TableCell>
+                                        <TableCell>{fee.fee_code}</TableCell>
+                                        <TableCell>{fee.student?.student_number}</TableCell>
+                                        <TableCell>{fee.feeGroup?.group}</TableCell>
+                                        <TableCell>{fee.semester}</TableCell>
+                                        <TableCell>{fee.academicYear?.name}</TableCell>
+                                        <TableCell>{fee.status}</TableCell>
+                                        <TableCell>{formatDateIndo(fee.created_at)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -280,7 +212,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between gap-y-2 border-t py-3 lg:flex-row">
                     <p className="text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-blue-600">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} Mahasiswa
+                        {meta.total} Pembayaran mahasiswa
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && <PaginationTable meta={meta} links={links} />}

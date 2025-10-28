@@ -1,6 +1,7 @@
 import { IconEye } from '@tabler/icons-react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from './ui/table';
+import { Button } from './ui/button';
 
 export default function Grades({ studyResult, grades, name = null }) {
     return (
@@ -33,7 +34,7 @@ export default function Grades({ studyResult, grades, name = null }) {
                                 <TableCell className="border">{index + 1}</TableCell>
                                 <TableCell className="border">{grade.course.code}</TableCell>
                                 <TableCell className="border">{grade.course.name}</TableCell>
-                                <TableCell className="border">{grade.course.credit}</TableCell>
+                                <TableCell className="border">{grade.course.credits}</TableCell>
                                 <TableCell className="border">{grade.letter}</TableCell>
                                 <TableCell className="border">{grade.weight_of_value}</TableCell>
                                 <TableCell className="border">{grade.grade}</TableCell>

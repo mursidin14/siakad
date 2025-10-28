@@ -27,4 +27,9 @@ class StudyResult extends Model
     {
         return $this->hasMany(StudyResultGrade::class);
     }
+
+    public function grades()
+    {
+        return $this->hasMany(StudyResultGrade::class);
+    }
 }
