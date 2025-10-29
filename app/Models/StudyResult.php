@@ -23,10 +23,10 @@ class StudyResult extends Model
         return $this->belongsTo(AcademicYear::class);
     }
 
-    public function studyResultGrades()
-    {
-        return $this->hasMany(StudyResultGrade::class);
-    }
+    // public function studyResultGrades()
+    // {
+    //     return $this->hasMany(StudyResultGrade::class);
+    // }
 
     public function grades()
     {

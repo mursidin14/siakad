@@ -68,7 +68,7 @@ export default function HeaderStudentLayout({ url, auth }) {
                                                     title="Kartu Rencana Studi"
                                                 />
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('student.study-results.index')}
                                                     active={url.startsWith('/student/study-result')}
                                                     title="Kartu Hasil Studi"
                                                 />
@@ -187,7 +187,7 @@ export default function HeaderStudentLayout({ url, auth }) {
 
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('student.study-results.index')}
                                     className={cn(
                                         url.startsWith('/student/study-result')
                                             ? 'bg-blue-500 text-white'

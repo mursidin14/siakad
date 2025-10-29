@@ -4,9 +4,8 @@ use App\Http\Controllers\Student\DashboardStudentController;
 use App\Http\Controllers\Student\FeeStudentController;
 use App\Http\Controllers\Student\ScheduleStudentController;
 use App\Http\Controllers\Student\StudyPlanController;
+use App\Http\Controllers\Student\StudyResultStudentController;
 use Illuminate\Support\Facades\Route;
-
-
 
 
 
@@ -31,9 +30,10 @@ Route::prefix('student')->middleware(['auth', 'role:Student'])->group(function (
     // Jadwal Navigation
     Route::get('schedules', ScheduleStudentController::class)->name('student.schedules.index');
 
-
     // fees Navigation
     Route::get('fees', FeeStudentController::class)->name('student.fees.index');
 
+    // study-result Navigation
+    Route::get('study-results', StudyResultStudentController::class)->name('student.study-results.index');
 
 });
