@@ -3,23 +3,16 @@ import Grades from '@/Components/Grades';
 import HeaderTitle from '@/Components/HeaderTitle';
 import PaginationTable from '@/Components/PaginationTable';
 import ShowFilter from '@/Components/ShowFilter';
-import { Badge } from '@/Components/ui/badge';
-import { Button } from '@/Components/ui/button';
-import { Input } from '@/Components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
-import UseFilter from '@/hooks/UseFilter';
 import StudentLayout from '@/Layouts/StudentLayout';
-import { formatDateIndo, STUDYPLANSTATUSVARIANT } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
-import { IconArrowsDownUp, IconBuilding, IconEye, IconPlus, IconRefresh, IconSchool } from '@tabler/icons-react';
+import { formatDateIndo } from '@/lib/utils';
+import { IconSchool } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function Index(props) {
     const { data: studyResults, meta, links } = props.studyResults;
 
     const [params, setParams] = useState(props.state);
-
 
     return (
         <div className="flex w-full flex-col">
@@ -32,15 +25,10 @@ export default function Index(props) {
             </div>
 
             <div className="flex flex-col gap-y-8">
-
                 {/* Show Filters */}
                 <ShowFilter params={params} />
                 {studyResults.length === 0 ? (
-                    <EmptyState 
-                        icon={IconSchool} 
-                        title="Tidak ada KHS" 
-                        subtitle="Mulailah dengan membuat KHS baru" 
-                        />
+                    <EmptyState icon={IconSchool} title="Tidak ada KHS" subtitle="Mulailah dengan membuat KHS baru" />
                 ) : (
                     <Table>
                         <TableHeader>
@@ -63,10 +51,7 @@ export default function Index(props) {
                                     <TableCell>{formatDateIndo(studyResult.created_at)}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-x-1">
-                                            <Grades 
-                                                studyResult={studyResult}
-                                                grades={studyResult.grades}
-                                            />
+                                            <Grades studyResult={studyResult} grades={studyResult.grades} />
                                         </div>
                                     </TableCell>
                                 </TableRow>

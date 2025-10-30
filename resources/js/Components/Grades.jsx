@@ -1,7 +1,7 @@
 import { IconEye } from '@tabler/icons-react';
+import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from './ui/table';
-import { Button } from './ui/button';
 
 export default function Grades({ studyResult, grades, name = null }) {
     return (

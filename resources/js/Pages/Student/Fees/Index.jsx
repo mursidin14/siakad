@@ -11,10 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import UseFilter from '@/hooks/UseFilter';
 import StudentLayout from '@/Layouts/StudentLayout';
-import { FEESTATUSVARIANT, formatDateIndo, formatToRupiah } from '@/lib/utils';
-import { usePage } from '@inertiajs/react';
+import { FeeCodeGenerator, FEESTATUSVARIANT, formatDateIndo, formatToRupiah } from '@/lib/utils';
+import { router, usePage } from '@inertiajs/react';
 import { IconArrowsDownUp, IconMoneybag, IconRefresh } from '@tabler/icons-react';
+import axios from 'axios';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function Index(props) {
     const auth = usePage().props.auth.user;
@@ -22,6 +24,39 @@ export default function Index(props) {
     const { data: fees, meta, links } = props.fees;
 
     const [params, setParams] = useState(props.state);
+
+    const handlePayment = async () => {
+        try {
+            const response = await axios.post(route('payments.create'), {
+                fee_code: FeeCodeGenerator(),
+                gross_amount: auth.student.feeGroup.amount,
+                first_name: auth.name,
+                last_name: 'Siakad',
+                email: auth.email,
+            });
+
+            const snapToken = response.data.snapToken;
+
+            window.snap.pay(snapToken, {
+                onSuccess: function(){
+                    toast['success']('Pembayaran berhasil')
+                    router.get(route('payments.success'));
+                },
+                onPending: function(){
+                    toast['warning']('Pembayaran ditunda')                    
+                },
+                onError: function(){
+                    toast['error'](`Kesalahan pembayaran: ${error}`)
+                },
+                onClose: function(){
+                    toast['info']('Pembayaran ditutup')
+                }
+            })
+
+        } catch (error) {
+            toast['error'](`Kesalahan pembayaran: ${error}`)
+        }
+    }
 
     const onSortable = (field) => {
         setParams({
@@ -89,7 +124,7 @@ export default function Index(props) {
                                                 <TableCell>{auth.student.feeGroup.group}</TableCell>
                                                 <TableCell>{formatToRupiah(auth.student.feeGroup.amount)}</TableCell>
                                                 <TableCell>
-                                                    <Button variant="orange">Bayar</Button>
+                                                    <Button variant="orange" onClick={handlePayment}>Bayar</Button>
                                                 </TableCell>
                                             </TableRow>
                                         </TableBody>
