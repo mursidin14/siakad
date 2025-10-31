@@ -6,10 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Student\StudyResultStudentResource;
 use App\Models\StudyResult;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Inertia\Response;
 
-class StudyResultStudentController extends Controller
+class StudyResultStudentController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('checkActiveAcademicYear'),
+            new Middleware('checkFeeStudent')
+        ];
+    }
+
     /**
      * Handle the incoming request.
      */

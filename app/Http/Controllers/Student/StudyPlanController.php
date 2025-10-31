@@ -13,12 +13,23 @@ use App\Models\Schedule;
 use App\Models\StudyPlan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Inertia\Response;
 use Throwable;
 
-class StudyPlanController extends Controller
+class StudyPlanController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('checkActiveAcademicYear'),
+            new Middleware('checkFeeStudent')
+        ];
+    }
+
     public function index(): Response
     {
         $studyPlans = StudyPlan::query()

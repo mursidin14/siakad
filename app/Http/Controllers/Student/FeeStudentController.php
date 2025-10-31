@@ -6,10 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Student\FeeStudentResource;
 use App\Models\Fee;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Inertia\Response;
 
-class FeeStudentController extends Controller
+class FeeStudentController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('checkActiveAcademicYear')
+        ];
+    }
+
     public function __invoke(): Response
     {
         $fee = Fee::query()

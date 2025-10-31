@@ -36,6 +36,9 @@ export const deleteAction = (url, { closeModal, ...options } = {}) => {
 };
 
 export const formatDateIndo = (dateString) => {
+    if (!dateString) {
+        return 'Belum ada tanggal';
+    }
     return format(parseISO(dateString), 'eee, dd MMM yyyy', { locale: id });
 };
 

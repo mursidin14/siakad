@@ -7,10 +7,19 @@ use App\Http\Controllers\Controller;
 use App\Models\StudyPlan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Inertia\Response;
 
-class ScheduleStudentController extends Controller
+class ScheduleStudentController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('checkActiveAcademicYear')
+        ];
+    }
     
     public function __invoke(): Response | RedirectResponse
     {

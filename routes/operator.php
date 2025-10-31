@@ -49,7 +49,7 @@ Route::prefix('operator')->middleware(['auth', 'role:Operator'])->group(function
 
 
     // Kelas Navigation
-    Route::controller(ClassroomOperatorController::class)->group(function() {
+    Route::controller(ClassroomOperatorController::class)->middleware('checkActiveAcademicYear')->group(function() {
         Route::get('classrooms', 'index')->name('operator.classrooms.index');
         Route::get('classrooms/create', 'create')->name('operator.classrooms.create');
         Route::post('classrooms/create', 'store')->name('operator.classrooms.store');
