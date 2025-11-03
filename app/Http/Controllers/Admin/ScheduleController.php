@@ -65,16 +65,6 @@ class ScheduleController extends Controller implements HasMiddleware
 
     public function create(Request $request): Response
     {
-        $departements = Departement::query()
-        ->when($request->faculty_id, fn ($q) => $q->where('faculty_id', $request->faculty_id))
-        ->select(['id', 'name'])
-        ->orderBy('name')
-        ->get()
-        ->map(fn ($item) => [
-            'value' => $item->id,
-            'label' => $item->name,
-        ]);
-
         return inertia('Admin/Schedules/Create', [
             'page_settings' => [
                 'title' => 'Tambah Jadwal Kuliah',

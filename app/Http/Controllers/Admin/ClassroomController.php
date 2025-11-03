@@ -56,7 +56,7 @@ class ClassroomController extends Controller implements HasMiddleware
     }
 
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
         return inertia('Admin/Classrooms/Create', [
             'page_settings' => [
@@ -71,10 +71,16 @@ class ClassroomController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 
@@ -100,7 +106,7 @@ class ClassroomController extends Controller implements HasMiddleware
     }
 
 
-    public function edit(ClassRoom $classroom): Response
+    public function edit(ClassRoom $classroom, Request $request): Response
     {
         return inertia('Admin/Classrooms/Edit', [
             'page_settings' => [
@@ -117,10 +123,16 @@ class ClassroomController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 
