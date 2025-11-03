@@ -63,8 +63,18 @@ class ScheduleController extends Controller implements HasMiddleware
     }
 
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
+        $departements = Departement::query()
+        ->when($request->faculty_id, fn ($q) => $q->where('faculty_id', $request->faculty_id))
+        ->select(['id', 'name'])
+        ->orderBy('name')
+        ->get()
+        ->map(fn ($item) => [
+            'value' => $item->id,
+            'label' => $item->name,
+        ]);
+
         return inertia('Admin/Schedules/Create', [
             'page_settings' => [
                 'title' => 'Tambah Jadwal Kuliah',
@@ -94,11 +104,7 @@ class ScheduleController extends Controller implements HasMiddleware
             ]),
 
             'days' => ScheduleDay::options(),
-
-            'academicYears' => AcademicYear::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 
@@ -115,7 +121,7 @@ class ScheduleController extends Controller implements HasMiddleware
                 'departement_id' => $request->departement_id,
                 'course_id' => $request->course_id,
                 'class_room_id' => $request->class_room_id,
-                'academic_year_id' => $request->academic_year_id,
+                'academic_year_id' => activeAcademicYear()->id,
             ]);
 
             flashMessage(MessageType::CREATED->message('Jadwal Kuliah'));
@@ -129,8 +135,18 @@ class ScheduleController extends Controller implements HasMiddleware
 
 
 
-    public function edit(Schedule $schedule): Response
+    public function edit(Schedule $schedule, Request $request): Response
     {
+        $departements = Departement::query()
+            ->when($request->faculty_id, fn ($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn ($item) => [
+                'value' => $item->id,
+                'label' => $item->name,
+            ]);
+
         return inertia('Admin/Schedules/Edit', [
             'page_settings' => [
                 'title' => 'Edit Jadwal Kuliah',
@@ -162,11 +178,7 @@ class ScheduleController extends Controller implements HasMiddleware
             ]),
 
             'days' => ScheduleDay::options(),
-
-            'academicYears' => AcademicYear::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 
@@ -183,7 +195,6 @@ class ScheduleController extends Controller implements HasMiddleware
                 'departement_id' => $request->departement_id,
                 'course_id' => $request->course_id,
                 'class_room_id' => $request->class_room_id,
-                'academic_year_id' => $request->academic_year_id,
             ]);
 
             flashMessage(MessageType::UPDATED->message('Jadwal Kuliah'));

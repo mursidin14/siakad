@@ -106,7 +106,7 @@ export default function Create(props) {
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
                                 <Input
-                                    id="academic_year_id"
+                                    id="id"
                                     name="academic_year_id"
                                     value={data.academic_year_id}
                                     onChange={onHandleChange}

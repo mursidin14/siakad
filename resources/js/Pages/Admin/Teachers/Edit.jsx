@@ -166,7 +166,7 @@ export default function Edit(props) {
                             </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="academic_title">Gelar</Label>
+                                <Label htmlFor="academic_title">Jabatan</Label>
                                 <Input
                                     type="academic_title"
                                     name="academic_title"

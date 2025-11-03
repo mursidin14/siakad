@@ -83,11 +83,6 @@ class CourseController extends Controller implements HasMiddleware
                 'value' => $item->id,
                 'label' => $item->user->name
             ]),
-
-            'academicYears' => AcademicYear::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name
-            ])
         ]);
     }
 
@@ -103,7 +98,7 @@ class CourseController extends Controller implements HasMiddleware
             'faculty_id' => $request->faculty_id,
             'departement_id' => $request->departement_id,
             'teacher_id' => $request->teacher_id,
-            'academic_year_id' => $request->academic_year_id,
+            'academic_year_id' => activeAcademicYear()->id,
         ]);
 
         flashMessage(MessageType::CREATED->message('Mata Kuliah'));
@@ -142,11 +137,6 @@ class CourseController extends Controller implements HasMiddleware
                 'value' => $item->id,
                 'label' => $item->user->name
             ]),
-
-            'academicYears' => AcademicYear::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name
-            ]),
         ]);
     }
 
@@ -162,7 +152,6 @@ class CourseController extends Controller implements HasMiddleware
                 'faculty_id' => $request->faculty_id,
                 'departement_id' => $request->departement_id,
                 'teacher_id' => $request->teacher_id,
-                'academic_year_id' => $request->academic_year_id,
             ]);
 
             flashMessage(MessageType::UPDATED->message('Edit Mata Kuliah'));

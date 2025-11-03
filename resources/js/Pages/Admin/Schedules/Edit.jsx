@@ -17,7 +17,7 @@ export default function Edit(props) {
         departement_id: props.schedule.departement_id ?? null,
         class_room_id: props.schedule.class_room_id ?? null,
         course_id: props.schedule.course_id ?? null,
-        academic_year_id: props.schedule.academic_year_id ?? null,
+        academic_year_id: props.academic_year.name ?? 'Tahuna akademik tidak aktif.',
         start_time: props.schedule.start_time ?? '',
         end_time: props.schedule.end_time ?? '',
         day_of_week: props.schedule.day_of_week ?? null,
@@ -219,25 +219,15 @@ export default function Edit(props) {
                             </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="academic_year_id">Mata Kuliah</Label>
-                                <Select
-                                    defaultValue={data.academic_year_id}
-                                    onValueChange={(value) => setData('academic_year_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.academicYears.find((year) => year.value == data.academic_year_id)
-                                                ?.label ?? 'Pilih Tahun Akademik'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.academicYears.map((academicYear, index) => (
-                                            <SelectItem key={index} value={academicYear.value}>
-                                                {academicYear.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                <Label htmlFor="academic_year_id">Tahun Akademik</Label>
+                                <Input 
+                                    id="id"
+                                    name="acadmeic_year_id"
+                                    value={data.academic_year_id}
+                                    onChange={onHandleChange}
+                                    type="text"
+                                    disabled
+                                />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
                         </div>
@@ -258,4 +248,4 @@ export default function Edit(props) {
     );
 }
 
-Edit.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />;
+Edit.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />

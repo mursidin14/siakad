@@ -55,10 +55,6 @@ class CourseRequest extends FormRequest
                 'required',
                 'exists:teachers,id'
             ],
-            'academic_year_id' => [
-                'required',
-                'exists:academic_years,id'
-            ],
         ];
     }
 
@@ -73,7 +69,6 @@ class CourseRequest extends FormRequest
             'faculty_id' => 'Fakultas',
             'departement_id' => 'Program Studi',
             'teacher_id' => 'Dosen Pengampu',
-            'academic_year_id' => 'Tahun Akademik',
         ];
     }
 }

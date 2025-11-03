@@ -166,7 +166,7 @@ export default function Create(props) {
                             </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="academic_title">Gelar</Label>
+                                <Label htmlFor="academic_title">Jabatan</Label>
                                 <Input
                                     type="text"
                                     name="academic_title"

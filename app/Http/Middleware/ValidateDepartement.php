@@ -19,7 +19,7 @@ class ValidateDepartement
 
         $departement = Departement::query()
         ->where('id', $request->departement_id)
-        ->where('faculty_id', $request->departement_id)
+        ->where('faculty_id', $request->faculty_id)
         ->exists();
 
         if(!$departement) {

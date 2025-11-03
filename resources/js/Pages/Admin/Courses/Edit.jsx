@@ -19,7 +19,7 @@ export default function Edit(props) {
         faculty_id: props.course.faculty_id ?? null,
         departement_id: props.course.departement_id ?? null,
         teacher_id: props.course.teacher_id ?? null,
-        academic_year_id: props.course.academic_year_id ?? null,
+        academic_year_id: props.academic_year.name ?? null,
         name: props.course.name ?? '',
         code: props.course.code ?? '',
         credits: props.course.credits ?? 0,
@@ -190,25 +190,14 @@ export default function Edit(props) {
 
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Select
-                                    defaultValue={data.academic_year_id}
-                                    onValueChange={(value) => setData('academic_year_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.academicYears.find(
-                                                (academicYear) => academicYear.value == data.academic_year_id,
-                                            )?.label ?? 'Pilih Tahun Ajaran'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.academicYears.map((academicYear, index) => (
-                                            <SelectItem key={index} value={academicYear.value}>
-                                                {academicYear.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                <Input 
+                                    id="id"
+                                    name="academic_year_id"
+                                    value={data.academic_year_id}
+                                    onChange={onHandleChange}
+                                    type="text"
+                                    disabled
+                                />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
                         </div>

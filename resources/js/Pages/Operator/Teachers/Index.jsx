@@ -150,7 +150,7 @@ export default function Index(props) {
                                             className="group inline-flex"
                                             onClick={() => onSortable('academic_title')}
                                         >
-                                            Gelar
+                                            Jabatan
                                             <span className="ml-2 flex-none rounded text-muted-foreground">
                                                 <IconArrowsDownUp className="size-4" />
                                             </span>

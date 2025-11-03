@@ -116,12 +116,12 @@ export default function Edit(props) {
                             </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="academic_title">Gelar</Label>
+                                <Label htmlFor="academic_title">Jabatan</Label>
                                 <Input
                                     type="text"
                                     name="academic_title"
                                     id="academic_title"
-                                    placeholder="Masukan gelar dosen"
+                                    placeholder="Masukan jabatan dosen"
                                     value={data.academic_title}
                                     onChange={onHandleChange}
                                 />

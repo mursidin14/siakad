@@ -7,17 +7,21 @@ import { Label } from '@/Components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, router, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCalendar, IconCheck } from '@tabler/icons-react';
+import { useRef } from 'react';
 import { toast } from 'sonner';
 
 export default function Create(props) {
+
+    const scheduleInput = useRef(null);
+
     const { data, setData, post, processing, errors, reset } = useForm({
-        faculty_id: null,
+        faculty_id: props.state.faculty_id ?? null,
         departement_id: null,
         class_room_id: null,
         course_id: null,
-        academic_year_id: null,
+        academic_year_id: props.academic_year.name ?? 'Tahuna akademik tidak aktif.',
         start_time: '',
         end_time: '',
         day_of_week: null,
@@ -29,6 +33,7 @@ export default function Create(props) {
 
     const onHandleReset = () => {
         reset();
+        scheduleInput.current.value = null;
     };
 
     const onHandleSubmit = (e) => {
@@ -219,25 +224,15 @@ export default function Create(props) {
                             </div>
 
                             <div className="col-span-full">
-                                <Label htmlFor="academic_year_id">Mata Kuliah</Label>
-                                <Select
-                                    defaultValue={data.academic_year_id}
-                                    onValueChange={(value) => setData('academic_year_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.academicYears.find((year) => year.value == data.academic_year_id)
-                                                ?.label ?? 'Pilih Tahun Akademik'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.academicYears.map((academicYear, index) => (
-                                            <SelectItem key={index} value={academicYear.value}>
-                                                {academicYear.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                <Label htmlFor="academic_year_id">Tahuna Akademik</Label>
+                                <Input 
+                                    id="id"
+                                    name="academic_year_id"
+                                    value={data.academic_year_id}
+                                    onChange={onHandleChange}
+                                    type="text"
+                                    disabled
+                                />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
                         </div>
@@ -258,4 +253,4 @@ export default function Create(props) {
     );
 }
 
-Create.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />;
+Create.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />

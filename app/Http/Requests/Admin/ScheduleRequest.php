@@ -58,10 +58,6 @@ class ScheduleRequest extends FormRequest
                 'required',
                 'exists:class_rooms,id'
             ],
-            'academic_year_id' => [
-                'required',
-                'exists:academic_years,id'
-            ]
         ];
     }
 
@@ -77,7 +73,6 @@ class ScheduleRequest extends FormRequest
             'departement_id' => 'Program Studi',
             'course_id' => 'Mata Kuliah',
             'class_room_id' => 'Ruang Kelas',
-            'academic_year_id' => 'Tahun Akademik',
         ];
     }
 }
