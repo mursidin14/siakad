@@ -7,7 +7,7 @@ import { Label } from '@/Components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, router, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconBook } from '@tabler/icons-react';
 import { useRef } from 'react';
 import { toast } from 'sonner';
@@ -122,7 +122,21 @@ export default function Create(props) {
                                 <Label htmlFor="faculty_id">Fakultas</Label>
                                 <Select
                                     defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
+                                    onValueChange={(value) => {
+                                        setData('faculty_id', value);
+                                        router.get(
+                                            route('admin.courses.create'),
+                                            {faculty_id: value},
+                                            {
+                                                preserveState: true,
+                                                preserveScroll: true,
+                                                replace: true,
+                                                onSuccess: () => {
+                                                    setData('departement_id', null);
+                                                }
+                                            }
+                                        )
+                                    }}
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
@@ -131,6 +145,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.faculties.length === 0 && 'Tidak ada fakultas'}
                                         {props.faculties.map((faculty, index) => (
                                             <SelectItem key={index} value={faculty.value}>
                                                 {faculty.label}
@@ -155,6 +170,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.departements.length === 0 && 'Tidak ada program studi'}
                                         {props.departements.map((departement, index) => (
                                             <SelectItem key={index} value={departement.value}>
                                                 {departement.label}
@@ -178,6 +194,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.teachers.length === 0 && 'Tidak ada dosen'}
                                         {props.teachers.map((teacher, index) => (
                                             <SelectItem key={index} value={teacher.value}>
                                                 {teacher.label}

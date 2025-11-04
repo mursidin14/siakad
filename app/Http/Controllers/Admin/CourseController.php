@@ -57,7 +57,7 @@ class CourseController extends Controller implements HasMiddleware
     }
 
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
         return inertia('Admin/Courses/Create', [
             'page_settings' => [
@@ -72,7 +72,12 @@ class CourseController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
@@ -83,6 +88,8 @@ class CourseController extends Controller implements HasMiddleware
                 'value' => $item->id,
                 'label' => $item->user->name
             ]),
+
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 
@@ -110,7 +117,7 @@ class CourseController extends Controller implements HasMiddleware
     }
 
 
-    public function edit(Course $course): Response
+    public function edit(Course $course, Request $request): Response
     {
         return inertia('Admin/Courses/Edit', [
             'course' => new CourseResource($course->load(['faculty', 'departement', 'teacher.user', 'academicYear'])),
@@ -126,7 +133,12 @@ class CourseController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->where('faculty_id', $request->input('faculty_id', $course->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
@@ -137,6 +149,7 @@ class CourseController extends Controller implements HasMiddleware
                 'value' => $item->id,
                 'label' => $item->user->name
             ]),
+            'state' => (object) $request->only(['faculty_id']),
         ]);
     }
 

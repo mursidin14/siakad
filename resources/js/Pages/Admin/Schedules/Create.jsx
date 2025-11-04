@@ -21,7 +21,7 @@ export default function Create(props) {
         departement_id: null,
         class_room_id: null,
         course_id: null,
-        academic_year_id: props.academic_year.name ?? 'Tahuna akademik tidak aktif.',
+        academic_year_id: props.academic_year.name ?? 'Tahun akademik tidak aktif.',
         start_time: '',
         end_time: '',
         day_of_week: null,
@@ -72,7 +72,21 @@ export default function Create(props) {
                                 <Label htmlFor="faculty_id">Fakultas</Label>
                                 <Select
                                     defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
+                                    onValueChange={(value) => {
+                                        setData('faculty_id', value);
+                                        router.get(
+                                            route('admin.schedules.create'),
+                                            {faculty_id: value},
+                                            {
+                                                preserveState: true,
+                                                preserveScroll: true,
+                                                replace: true,
+                                                onSuccess: () => {
+                                                    setData('departement_id', null);
+                                                }
+                                            }
+                                        )
+                                    }}
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
@@ -81,6 +95,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.faculties.length === 0 && 'Tidak ada fakultas'}
                                         {props.faculties.map((faculty, index) => (
                                             <SelectItem key={index} value={faculty.value}>
                                                 {faculty.label}
@@ -95,7 +110,21 @@ export default function Create(props) {
                                 <Label htmlFor="departement_id">Program Studi</Label>
                                 <Select
                                     defaultValue={data.departement_id}
-                                    onValueChange={(value) => setData('departement_id', value)}
+                                    onValueChange={(value) => {
+                                        setData('departement_id', value);
+                                        router.get(
+                                            route('admin.schedules.create'),
+                                            {departement_id: value},
+                                            {
+                                                preserveState: true,
+                                                preserveScroll: true,
+                                                replace: true,
+                                                onSuccess: () => {
+                                                    setData('class_room_id', null);
+                                                }
+                                            }
+                                        )
+                                    }}
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
@@ -105,6 +134,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.departements.length === 0 && 'Tidak ada program studi'}
                                         {props.departements.map((departement, index) => (
                                             <SelectItem key={index} value={departement.value}>
                                                 {departement.label}
@@ -128,6 +158,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.classrooms.length === 0 && 'Tidak ada kelas'}
                                         {props.classrooms.map((classroom, index) => (
                                             <SelectItem key={index} value={classroom.value}>
                                                 {classroom.label}
@@ -151,6 +182,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.courses.length === 0 && 'Tidak ada mata kuliah'}
                                         {props.courses.map((course, index) => (
                                             <SelectItem key={index} value={course.value}>
                                                 {course.label}

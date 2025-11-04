@@ -78,7 +78,12 @@ class ScheduleController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
@@ -88,13 +93,19 @@ class ScheduleController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'classrooms' => ClassRoom::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'classrooms' => ClassRoom::query()
+            ->when($request->departement_id, fn($q) => $q->where('departement_id', $request->departement_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
 
             'days' => ScheduleDay::options(),
-            'state' => (object) $request->only(['faculty_id']),
+            'state' => (object) $request->only(['faculty_id', 'departement_id']),
+
         ]);
     }
 
@@ -127,15 +138,6 @@ class ScheduleController extends Controller implements HasMiddleware
 
     public function edit(Schedule $schedule, Request $request): Response
     {
-        $departements = Departement::query()
-            ->when($request->faculty_id, fn ($q) => $q->where('faculty_id', $request->faculty_id))
-            ->select(['id', 'name'])
-            ->orderBy('name')
-            ->get()
-            ->map(fn ($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]);
 
         return inertia('Admin/Schedules/Edit', [
             'page_settings' => [
@@ -152,7 +154,12 @@ class ScheduleController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->where('faculty_id', $request->input('faculty_id', $schedule->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
@@ -162,13 +169,18 @@ class ScheduleController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'classrooms' => ClassRoom::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'classrooms' => ClassRoom::query()
+            ->where('departement_id', $request->input('departement_id', $schedule->departement_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
 
             'days' => ScheduleDay::options(),
-            'state' => (object) $request->only(['faculty_id']),
+            'state' => (object) $request->only(['faculty_id', 'departement_id']),
         ]);
     }
 
