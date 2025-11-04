@@ -108,7 +108,7 @@ class ClassroomController extends Controller implements HasMiddleware
 
     public function edit(ClassRoom $classroom, Request $request): Response
     {
-        $classroom->load('academicYear'); // Load the relationship
+        $classroom->load('academicYear');
 
         return inertia('Admin/Classrooms/Edit', [
             'page_settings' => [

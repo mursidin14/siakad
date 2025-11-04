@@ -7,7 +7,7 @@ import { Label } from '@/Components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, router, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconUsersGroup } from '@tabler/icons-react';
 import { useRef } from 'react';
 import { toast } from 'sonner';
@@ -109,7 +109,21 @@ export default function Edit(props) {
                                 <Label htmlFor="faculty_id">Fakultas</Label>
                                 <Select
                                     defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
+                                    onValueChange={(value) => {
+                                        setData('faculty_id', value);
+                                        router.get(
+                                            route('admin.teachers.edit', {teacher: props.teacher}),
+                                            {faculty_id: value},
+                                            {
+                                                preserveState: true,
+                                                preserveScroll: true,
+                                                replace: true,
+                                                onSuccess: () => {
+                                                    setData('departement_id', null)
+                                                }
+                                            }
+                                        )
+                                    }}
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
@@ -142,6 +156,7 @@ export default function Edit(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.departements.length === 0 && 'Tidak ada program studi'}
                                         {props.departements.map((departement, index) => (
                                             <SelectItem key={index} value={departement.value}>
                                                 {departement.label}
