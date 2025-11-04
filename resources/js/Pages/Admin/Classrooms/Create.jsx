@@ -83,6 +83,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.faculties.length === 0 && 'Tidak ada fakultas'}
                                         {props.faculties.map((faculty, index) => (
                                             <SelectItem key={index} value={faculty.value}>
                                                 {faculty.label}
@@ -107,6 +108,7 @@ export default function Create(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.departements.length === 0 && 'Tidak ada program studi'}
                                         {props.departements.map((departement, index) => (
                                             <SelectItem key={index} value={departement.value}>
                                                 {departement.label}

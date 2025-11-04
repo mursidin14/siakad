@@ -108,6 +108,8 @@ class ClassroomController extends Controller implements HasMiddleware
 
     public function edit(ClassRoom $classroom, Request $request): Response
     {
+        $classroom->load('academicYear'); // Load the relationship
+
         return inertia('Admin/Classrooms/Edit', [
             'page_settings' => [
                 'title' => 'Edit Kelas',
@@ -124,14 +126,14 @@ class ClassroomController extends Controller implements HasMiddleware
             ]),
 
             'departements' => Departement::query()
-            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
-            ->select(['id', 'name'])
-            ->orderBy('name')
-            ->get()
-            ->map(fn ($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
+                ->where('faculty_id', $request->input('faculty_id', $classroom->faculty_id))
+                ->select(['id', 'name'])
+                ->orderBy('name')
+                ->get()
+                ->map(fn ($item) => [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ]),
             'state' => (object) $request->only(['faculty_id']),
         ]);
     }

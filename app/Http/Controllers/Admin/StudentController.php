@@ -64,7 +64,7 @@ class StudentController extends Controller implements HasMiddleware
     }
 
 
-    public function create(): Response
+    public function create(Request $request): Response
     {
         return inertia('Admin/Students/Create', [
             'page_settings' => [
@@ -79,12 +79,22 @@ class StudentController extends Controller implements HasMiddleware
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departements' => Departement::query()
+            ->when($request->faculty_id, fn($q) => $q->where('faculty_id', $request->faculty_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
 
-            'classRooms' => ClassRoom::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'classRooms' => ClassRoom::query()
+            ->when($request->departement_id, fn($q) => $q->where('departement_id', $request->departement_id))
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
@@ -93,6 +103,8 @@ class StudentController extends Controller implements HasMiddleware
                 'value' => $item->id,
                 'label' => 'Golongan'.$item->group.'-'.number_format($item->amount, 0, ',', '.'),
             ]),
+            
+            'state' => (object) $request->only(['faculty_id', 'departement_id']),
         ]);
     }
 
@@ -132,8 +144,10 @@ class StudentController extends Controller implements HasMiddleware
     }
 
 
-    public function edit(Student $student): Response
+    public function edit(Student $student, Request $request): Response
     {
+        $student->load('user');
+
         return inertia('Admin/Students/Edit', [
             'page_settings' => [
                 'title' => 'Edit Mahasiswa',
@@ -142,27 +156,39 @@ class StudentController extends Controller implements HasMiddleware
                 'action' => route('admin.students.update', $student),
             ],
 
-            'student' => $student->load('user'),
+            'student' => $student,
 
             'faculties' => Faculty::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name,
             ]),
 
-            'departements' => Departement::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
+            'departements' => Departement::query()
+                ->where('faculty_id', $request->input('faculty_id', $student->faculty_id))
+                ->select(['id', 'name'])
+                ->orderBy('name')
+                ->get()
+                ->map(fn($item) => [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ]),
 
-            'classRooms' => ClassRoom::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
+            'classRooms' => ClassRoom::query()
+                ->where('departement_id', $request->input('departement_id', $student->departement_id))
+                ->select(['id', 'name'])
+                ->orderBy('name')
+                ->get()
+                ->map(fn($item) => [
+                    'value' => $item->id,
+                    'label' => $item->name,
+                ]),
 
             'feeGroups' => FeeGroup::query()->select(['id', 'group', 'amount'])->orderBy('group')->get()->map(fn($item) => [
                 'value' => $item->id,
-                'label' => $item->group,
+                'label' => 'Golongan'.$item->group.'-'.number_format($item->amount, 0, ',', '.'),
             ]),
+
+            'state' => (object) $request->only(['faculty_id', 'departement_id'])
         ]);
     }
 

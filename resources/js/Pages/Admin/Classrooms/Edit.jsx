@@ -13,9 +13,9 @@ import { toast } from 'sonner';
 
 export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        faculty_id: props.classroom.faculty_id ?? null,
+        faculty_id: props.state.faculty_id ?? props.classroom.faculty_id,
         departement_id: props.classroom.departement_id ?? null,
-        academic_year_id: props.academic_year.name ?? '',
+        academic_year_id: props.classroom.academic_year.name ?? '',
         name: props.classroom.name ?? '',
         _method: props.page_settings.method,
     });
@@ -63,7 +63,7 @@ export default function Edit(props) {
                                     onValueChange={(value) => {
                                         setData('faculty_id', value);
                                         router.get(
-                                            route('admin.classrooms.create'),
+                                            route('admin.classrooms.edit', {classroom: props.classroom}),
                                             { faculty_id: value },
                                             {
                                                 preserveState: true,
@@ -107,6 +107,7 @@ export default function Edit(props) {
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                        {props.departements.length === 0 && 'Tidak ada program studi'}
                                         {props.departements.map((departement, index) => (
                                             <SelectItem key={index} value={departement.value}>
                                                 {departement.label}
@@ -160,4 +161,4 @@ export default function Edit(props) {
     );
 }
 
-Edit.layout = (page) => <AppLayout title={page.props.page_settings.titel} children={page} />;
+Edit.layout = (page) => <AppLayout title={page.props.page_settings.title} children={page} />
